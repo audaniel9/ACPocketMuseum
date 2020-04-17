@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">AC Pocket Museum</string>
+    <string name="search">Search</string>
+    <string name="sort">Sort</string>
+    <string name="sort_by_Default">Sort by: Default</string>
+    <string name="sort_by_AZ">Sort by: Ascending(A-Z)</string>
+    <string name="sort_by_ZA">Sort by: Descending(Z-A)</string>
+    <string name="filter">Filter</string>
+    <string name="filter_fish">Filter: Fish</string>
+    <string name="filter_insect">Filter: Insect</string>
+</resources>
