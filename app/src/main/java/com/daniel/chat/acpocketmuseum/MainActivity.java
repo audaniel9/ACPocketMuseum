@@ -1,17 +1,14 @@
 package com.daniel.chat.acpocketmuseum;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import org.json.JSONArray;
@@ -36,19 +33,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Toolbar toolbar = findViewById(R.id.toolbar);
-        recyclerView = findViewById(R.id.recyclerView);
-
-        setSupportActionBar(toolbar);
-
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this)); // change this to get grid view i think?
-
+        buildToolbar();
         try {
             JSONParser();
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
+
+        buildRecyclerView();
     }
 
     // Toolbar menu logic
@@ -105,6 +97,31 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    // Build the toolbar
+    public void buildToolbar() {
+        final Toolbar toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+    }
+
+    // Build the recycler view
+    public void buildRecyclerView() {
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this)); // change this to get grid view i think?
+
+        adapter = new MuseumSpecimenAdapter(museumSpecimenList, museumSpecimenListFishOnly, museumSpecimenListInsectOnly);
+        /*
+        adapter.setOnItemClickListener(new MuseumSpecimenAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+
+            }
+        });
+*/
+        recyclerView.setAdapter(adapter);
     }
 
     // Performs menu check toggling
@@ -166,8 +183,5 @@ public class MainActivity extends AppCompatActivity {
         }
         museumSpecimenList.addAll(museumSpecimenListFishOnly);
         museumSpecimenList.addAll(museumSpecimenListInsectOnly);
-
-        adapter = new MuseumSpecimenAdapter(museumSpecimenList, museumSpecimenListFishOnly, museumSpecimenListInsectOnly);
-        recyclerView.setAdapter(adapter);
     }
 }

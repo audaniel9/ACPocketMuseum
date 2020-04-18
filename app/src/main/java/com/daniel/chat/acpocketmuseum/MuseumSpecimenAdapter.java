@@ -3,12 +3,15 @@ package com.daniel.chat.acpocketmuseum;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,6 +22,12 @@ public class MuseumSpecimenAdapter extends RecyclerView.Adapter<MuseumSpecimenAd
     private List<MuseumSpecimen> museumSpecimenListInsectOnly;
     private List<MuseumSpecimen> museumSpecimenListFull;
     private List<MuseumSpecimen> museumSpecimenListStatic;
+    private OnItemClickListener itemListener;
+
+    // Click listener interface
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
 
     // Adapter constructor
     public MuseumSpecimenAdapter(List<MuseumSpecimen> museumSpecimenList, List<MuseumSpecimen> museumSpecimenListFishOnly, List<MuseumSpecimen> museumSpecimenListInsectOnly) {
@@ -29,10 +38,11 @@ public class MuseumSpecimenAdapter extends RecyclerView.Adapter<MuseumSpecimenAd
         this.museumSpecimenListStatic = new ArrayList<>(museumSpecimenList);
     }
 
+    @NotNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.museum_specimen_card, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, itemListener);
     }
 
     @Override
@@ -113,7 +123,12 @@ public class MuseumSpecimenAdapter extends RecyclerView.Adapter<MuseumSpecimenAd
         }
     };
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    // Method
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        itemListener = listener;
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView specimenNameTextView;
         public TextView locationTextView;
@@ -121,18 +136,36 @@ public class MuseumSpecimenAdapter extends RecyclerView.Adapter<MuseumSpecimenAd
         public TextView timesTextView;
         public ToggleButton saveButton;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
             specimenNameTextView = itemView.findViewById(R.id.specimenName);
             locationTextView = itemView.findViewById(R.id.location);
             priceTextView = itemView.findViewById(R.id.price);
             timesTextView = itemView.findViewById(R.id.times);
             saveButton = itemView.findViewById(R.id.saveButton);
-        }
-/*
-        saveButton.setOnClickListener(new View.OnClickListener() {
 
-        });
-*/
+            saveButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(saveButton.isChecked()) {
+                        saveButton.setBackgroundColor(ContextCompat.getColor(saveButton.getContext(), R.color.saveButtonStateOn));
+                    }
+                    else {
+                        saveButton.setBackgroundColor(ContextCompat.getColor(saveButton.getContext(), R.color.saveButtonStateOff));
+                    }
+                }
+            });
+
+/*            saveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(listener != null) {
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+           });
+*/        }
     }
 }

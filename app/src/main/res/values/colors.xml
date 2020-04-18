@@ -3,4 +3,6 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#2DB479</color>
+    <color name="saveButtonStateOff">@android:color/darker_gray</color>
+    <color name="saveButtonStateOn">@android:color/holo_green_light</color>
 </resources>
