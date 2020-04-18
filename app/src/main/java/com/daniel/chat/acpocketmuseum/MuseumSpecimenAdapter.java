@@ -8,7 +8,6 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import org.jetbrains.annotations.NotNull;
@@ -144,6 +143,18 @@ public class MuseumSpecimenAdapter extends RecyclerView.Adapter<MuseumSpecimenAd
             timesTextView = itemView.findViewById(R.id.times);
             saveButton = itemView.findViewById(R.id.saveButton);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(listener != null) {
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
+
             saveButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(saveButton.isChecked()) {
@@ -154,18 +165,6 @@ public class MuseumSpecimenAdapter extends RecyclerView.Adapter<MuseumSpecimenAd
                     }
                 }
             });
-
-/*            saveButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(listener != null) {
-                        int position = getAdapterPosition();
-                        if(position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(position);
-                        }
-                    }
-                }
-           });
-*/        }
+        }
     }
 }

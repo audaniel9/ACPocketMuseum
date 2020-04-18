@@ -1,14 +1,13 @@
 package com.daniel.chat.acpocketmuseum;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ToggleButton;
-
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import org.json.JSONArray;
@@ -110,17 +109,20 @@ public class MainActivity extends AppCompatActivity {
     public void buildRecyclerView() {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this)); // change this to get grid view i think?
+        recyclerView.setLayoutManager(new LinearLayoutManager(this)); // change this to implement grid view i think?
 
         adapter = new MuseumSpecimenAdapter(museumSpecimenList, museumSpecimenListFishOnly, museumSpecimenListInsectOnly);
-        /*
+
         adapter.setOnItemClickListener(new MuseumSpecimenAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
+                Intent intent = new Intent(MainActivity.this, InfoActivity.class);
+                intent.putExtra("Main Info", museumSpecimenList.get(position));
 
+                startActivity(intent);
             }
         });
-*/
+
         recyclerView.setAdapter(adapter);
     }
 
