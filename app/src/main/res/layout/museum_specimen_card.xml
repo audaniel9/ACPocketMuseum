@@ -54,14 +54,15 @@
 
             <ToggleButton
                 android:id="@+id/saveButton"
-                android:layout_width="80dp"
-                android:layout_height="60dp"
+                android:layout_width="60dp"
+                android:layout_height="45dp"
+                android:background="@android:color/darker_gray"
                 android:text="SaveButton"
                 android:textOff="Add"
                 android:textOn="Saved"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
