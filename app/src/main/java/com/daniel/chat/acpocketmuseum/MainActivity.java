@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -103,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
         final Toolbar toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Museum");   // Its gotta be like this to prevent null object references
     }
 
     // Build the recycler view
@@ -138,16 +140,15 @@ public class MainActivity extends AppCompatActivity {
 
     // Reads JSON file
     public String JSONFileReader(String file) throws IOException {
-        BufferedReader reader;
-        reader = new BufferedReader(new InputStreamReader(getAssets().open(file), "UTF-8"));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(getAssets().open(file), "UTF-8"));
 
-        String content = "";
+        StringBuilder content = new StringBuilder();
         String line;
         while ((line = reader.readLine()) != null) {
-            content = content + line;
+            content.append(line);
         }
 
-        return content;
+        return content.toString();
     }
 
     // Parses the file that have been read

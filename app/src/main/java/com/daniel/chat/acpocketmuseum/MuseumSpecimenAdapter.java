@@ -48,15 +48,10 @@ public class MuseumSpecimenAdapter extends RecyclerView.Adapter<MuseumSpecimenAd
     public void onBindViewHolder(ViewHolder holder, int position) {
         MuseumSpecimen currentItem = museumSpecimenList.get(position);
 
-        String specimenName = currentItem.getSpecimenName();
-        String location = currentItem.getLocation();
-        String price = currentItem.getPrice();
-        String times = currentItem.getTimes();
-
-        holder.specimenNameTextView.setText(specimenName);
-        holder.locationTextView.setText(location);
-        holder.priceTextView.setText(price);
-        holder.timesTextView.setText(times);
+        holder.specimenNameTextView.setText(currentItem.getSpecimenName());
+        holder.locationTextView.setText(currentItem.getLocation());
+        holder.priceTextView.setText(currentItem.getPrice());
+        holder.timesTextView.setText(currentItem.getTimes());
     }
 
     @Override

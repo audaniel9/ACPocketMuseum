@@ -42,7 +42,7 @@ public class InfoActivity extends AppCompatActivity {
         final Toolbar toolbar = findViewById(R.id.infoToolbar);
 
         setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Information"); // Its gotta be like this to prevent null object references
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Information");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }
