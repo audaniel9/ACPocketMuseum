@@ -6,8 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ToggleButton;
+
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import org.json.JSONArray;
@@ -114,14 +117,27 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this)); // change this to implement grid view i think?
 
         adapter = new MuseumSpecimenAdapter(museumSpecimenList, museumSpecimenListFishOnly, museumSpecimenListInsectOnly);
+        adapter.setHasStableIds(true);
 
         adapter.setOnItemClickListener(new MuseumSpecimenAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(int position) {
+            public void onCardItemClick(int position) {
                 Intent intent = new Intent(MainActivity.this, InfoActivity.class);
                 intent.putExtra("Main Info", museumSpecimenList.get(position));
 
                 startActivity(intent);
+            }
+
+            @Override
+            public void onSaveButtonClick(long id, ToggleButton saveButton) {
+                if(saveButton.isChecked()) {
+                    saveButton.setBackgroundColor(ContextCompat.getColor(saveButton.getContext(), R.color.saveButtonStateOn));
+                    adapter.saveData(id, saveButton);
+                }
+                else {
+                    saveButton.setBackgroundColor(ContextCompat.getColor(saveButton.getContext(), R.color.saveButtonStateOff));
+                    adapter.saveData(id, saveButton);
+                }
             }
         });
 
@@ -166,23 +182,25 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < fishJSONArray.length(); i++) {
             JSONObject fish = fishJSONArray.getJSONObject(i);
 
+            int id = fish.getInt("id");
             String specimenName = fish.getString("name");
             String location = "Location: " + fish.getString("location");
             String price = "Price: " + fish.getString("price") + " bells";
             String times = "Times: " + fish.getJSONObject("times").getString("text");
 
-            museumSpecimenListFishOnly.add(new MuseumSpecimen(specimenName, location, price, times));
+            museumSpecimenListFishOnly.add(new MuseumSpecimen(id, specimenName, location, price, times));
         }
 
         for (int i = 0; i < insectJSONArray.length(); i++) {
             JSONObject insect = insectJSONArray.getJSONObject(i);
 
+            int id = insect.getInt("id");
             String specimenName = insect.getString("name");
             String location = "Location: " + insect.getString("location");
             String price = "Price: " + insect.getString("price")+ " bells";
             String times = "Times: " + insect.getJSONObject("times").getString("text");
 
-            museumSpecimenListInsectOnly.add(new MuseumSpecimen(specimenName, location, price, times));
+            museumSpecimenListInsectOnly.add(new MuseumSpecimen(id, specimenName, location, price, times));
         }
         museumSpecimenList.addAll(museumSpecimenListFishOnly);
         museumSpecimenList.addAll(museumSpecimenListInsectOnly);

@@ -9,9 +9,11 @@ public class MuseumSpecimen implements Parcelable {
     private String location;
     private String price;
     private String times;
+    private int id;
 
     // Constructor
-    public MuseumSpecimen(String specimenName, String location, String price, String times) {
+    public MuseumSpecimen(int id, String specimenName, String location, String price, String times) {
+        this.id = id;
         this.specimenName = specimenName;
         this.location = location;
         this.price = price;
@@ -38,6 +40,10 @@ public class MuseumSpecimen implements Parcelable {
             return new MuseumSpecimen[size];
         }
     };
+
+    public int getId() {
+        return id;
+    }
 
     public String getSpecimenName() {
         return specimenName;
