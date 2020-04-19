@@ -1,5 +1,7 @@
 package com.daniel.chat.acpocketmuseum;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,8 +13,13 @@ import android.widget.ToggleButton;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.navigation.NavigationView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,6 +31,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
+    private Toolbar toolbar;
+    private DrawerLayout drawer;
     private RecyclerView recyclerView;
     private List<MuseumSpecimen> museumSpecimenList;
     private List<MuseumSpecimen> museumSpecimenListFishOnly;
@@ -43,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        buildDrawer();
         buildRecyclerView();
     }
 
@@ -102,12 +112,47 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Pressing back button while navigation drawer is open won't close the activity home screen
+    @Override
+    public void onBackPressed() {
+        if(drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
+
     // Build the toolbar
     public void buildToolbar() {
-        final Toolbar toolbar = findViewById(R.id.toolbar);
-
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Museum");   // Its gotta be like this to prevent null object references
+    }
+
+    // Build the navigation drawer
+    public void buildDrawer() {
+        drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()) {
+                    case R.id.navSavedList:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SavedListFragment()).addToBackStack(null).commit();
+                        break;
+                }
+
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
     }
 
     // Build the recycler view

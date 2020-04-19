@@ -61,6 +61,11 @@ public class MuseumSpecimenAdapter extends RecyclerView.Adapter<MuseumSpecimenAd
         loadData(holder);
     }
 
+    @Override
+    public int getItemCount() {
+        return museumSpecimenList.size();
+    }
+
     // Load data through SharedPreferences
     public void loadData(ViewHolder holder) {
         SharedPreferences sharedPreferences = holder.saveButton.getContext().getSharedPreferences(prefs, Context.MODE_PRIVATE);
@@ -77,18 +82,11 @@ public class MuseumSpecimenAdapter extends RecyclerView.Adapter<MuseumSpecimenAd
 
         editor.putBoolean(prefSaveButtonState + id, saveButton.isChecked());
         editor.apply();
-
-        Toast.makeText(saveButton.getContext(), prefSaveButtonState + id, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public long getItemId(int position) {
         return museumSpecimenList.get(position).getId();
-    }
-
-    @Override
-    public int getItemCount() {
-        return museumSpecimenList.size();
     }
 
     @Override

@@ -8,4 +8,6 @@
     <string name="filter">Filter</string>
     <string name="filter_fish">Filter: Fish</string>
     <string name="filter_insect">Filter: Insect</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
