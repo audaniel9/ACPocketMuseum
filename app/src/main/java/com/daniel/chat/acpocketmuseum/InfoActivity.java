@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.daniel.chat.acpocketmuseum.model.MuseumSpecimen;
+
 import java.util.Objects;
 
 public class InfoActivity extends AppCompatActivity {
