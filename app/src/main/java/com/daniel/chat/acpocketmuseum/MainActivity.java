@@ -18,6 +18,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.daniel.chat.acpocketmuseum.adapter.MuseumSpecimenAdapter;
+import com.daniel.chat.acpocketmuseum.fragment.SavedListFragment;
+import com.daniel.chat.acpocketmuseum.model.MuseumSpecimen;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;

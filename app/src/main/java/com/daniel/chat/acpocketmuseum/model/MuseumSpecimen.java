@@ -1,4 +1,4 @@
-package com.daniel.chat.acpocketmuseum;
+package com.daniel.chat.acpocketmuseum.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
