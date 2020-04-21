@@ -4,22 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ToggleButton;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.daniel.chat.acpocketmuseum.adapter.MuseumSpecimenAdapter;
-import com.daniel.chat.acpocketmuseum.fragment.SavedListFragment;
+import com.daniel.chat.acpocketmuseum.fragment.MuseumFragment;
 import com.daniel.chat.acpocketmuseum.model.MuseumSpecimen;
 import com.google.android.material.navigation.NavigationView;
 
@@ -29,19 +26,20 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MuseumFragment.MuseumFragmentDataPasser {
     private Toolbar toolbar;
     private DrawerLayout drawer;
-    private RecyclerView recyclerView;
+    private MuseumSpecimenAdapter adapter;
     private List<MuseumSpecimen> museumSpecimenList;
     private List<MuseumSpecimen> museumSpecimenListFishOnly;
     private List<MuseumSpecimen> museumSpecimenListInsectOnly;
-    private MuseumSpecimenAdapter adapter;
     private MenuItem prevMenuItem;  // For toolbar menu use
+    private String currentFragment; // For fragment stack use
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         buildDrawer();
-        buildRecyclerView();
+
+        fragmentStackListener();
     }
 
     // Toolbar menu logic
@@ -121,16 +120,25 @@ public class MainActivity extends AppCompatActivity {
         if(drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
+
+        if(currentFragment.equals("MuseumFragment")) {
+            finish();   // End activity
+        }
         else {
             super.onBackPressed();
         }
+    }
+
+    // Retrieve data from fragment
+    @Override
+    public void adapterDataPass(MuseumSpecimenAdapter adapter) {
+        this.adapter = adapter;
     }
 
     // Build the toolbar
     public void buildToolbar() {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Museum");   // Its gotta be like this to prevent null object references
     }
 
     // Build the navigation drawer
@@ -141,15 +149,28 @@ public class MainActivity extends AppCompatActivity {
         drawer.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.navigation_view);
+        final NavigationView navigationView = findViewById(R.id.navigation_view);
+
+        // Set museum fragment to start when activity starts
+        getSupportFragmentManager().beginTransaction().replace(
+                R.id.fragment_container, MuseumFragment.newInstance(museumSpecimenList, museumSpecimenListFishOnly, museumSpecimenListInsectOnly))
+                .addToBackStack(null).commit();
+
+        navigationView.setCheckedItem(R.id.museum); // Set Museum menu item in navigation drawer to checked
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch(item.getItemId()) {
-                    case R.id.navSavedList:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SavedListFragment()).addToBackStack(null).commit();
-                        break;
+                if(!(navigationView.getCheckedItem() == item)) {
+                    switch(item.getItemId()) {
+                        case R.id.museum:
+                            getSupportFragmentManager().beginTransaction()
+                                    .setCustomAnimations(R.anim.enter_from_bottom, R.anim.fade_out)
+                                    .replace(R.id.fragment_container, MuseumFragment.newInstance(museumSpecimenList, museumSpecimenListFishOnly, museumSpecimenListInsectOnly))
+                                    .addToBackStack(null).commit();
+                            Objects.requireNonNull(getSupportActionBar()).setTitle("Museum");   // It has to have requireNonNull to prevent null object references
+                            break;
+                    }
                 }
 
                 drawer.closeDrawer(GravityCompat.START);
@@ -158,39 +179,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // Build the recycler view
-    public void buildRecyclerView() {
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this)); // change this to implement grid view i think?
 
-        adapter = new MuseumSpecimenAdapter(museumSpecimenList, museumSpecimenListFishOnly, museumSpecimenListInsectOnly);
-        adapter.setHasStableIds(true);
-
-        adapter.setOnItemClickListener(new MuseumSpecimenAdapter.OnItemClickListener() {
-            @Override
-            public void onCardItemClick(int position) {
-                Intent intent = new Intent(MainActivity.this, InfoActivity.class);
-                intent.putExtra("Main Info", museumSpecimenList.get(position));
-
-                startActivity(intent);
-            }
-
-            @Override
-            public void onSaveButtonClick(long id, ToggleButton saveButton) {
-                if(saveButton.isChecked()) {
-                    saveButton.setBackgroundColor(ContextCompat.getColor(saveButton.getContext(), R.color.saveButtonStateOn));
-                    adapter.saveData(id, saveButton);
-                }
-                else {
-                    saveButton.setBackgroundColor(ContextCompat.getColor(saveButton.getContext(), R.color.saveButtonStateOff));
-                    adapter.saveData(id, saveButton);
-                }
-            }
-        });
-
-        recyclerView.setAdapter(adapter);
-    }
 
     // Performs menu check toggling
     public void toggleCheck(MenuItem item) {
@@ -202,9 +191,21 @@ public class MainActivity extends AppCompatActivity {
         prevMenuItem = item;
     }
 
+    // Listens for change in fragment stack; used for destroying activity on back press while on first fragment
+    public void fragmentStackListener() {
+        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
+                Fragment frag = fragmentList.get(0);
+                currentFragment = frag.getClass().getSimpleName();
+            }
+        });
+    }
+
     // Reads JSON file
     public String JSONFileReader(String file) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(getAssets().open(file), "UTF-8"));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(getAssets().open(file), StandardCharsets.UTF_8));
 
         StringBuilder content = new StringBuilder();
         String line;

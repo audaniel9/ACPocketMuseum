@@ -15,20 +15,13 @@
             android:id="@+id/toolbar"
             layout="@layout/toolbar" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <FrameLayout
+            android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            tools:layout_editor_absoluteX="0dp"
-            tools:listitem="@layout/museum_specimen_card"/>
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"
@@ -38,4 +31,5 @@
         app:headerLayout="@layout/nav_drawer_header"
         app:menu="@menu/nav_drawer">
     </com.google.android.material.navigation.NavigationView>
+
 </androidx.drawerlayout.widget.DrawerLayout>
