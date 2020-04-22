@@ -101,11 +101,9 @@ public class MuseumFragment extends Fragment {
             @Override
             public void onSaveButtonClick(long id, ToggleButton saveButton) {
                 if(saveButton.isChecked()) {
-                    saveButton.setBackgroundColor(ContextCompat.getColor(saveButton.getContext(), R.color.saveButtonStateOn));
                     adapter.saveData(id, saveButton);
                 }
                 else {
-                    saveButton.setBackgroundColor(ContextCompat.getColor(saveButton.getContext(), R.color.saveButtonStateOff));
                     adapter.saveData(id, saveButton);
                 }
             }
