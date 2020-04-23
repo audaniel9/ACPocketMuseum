@@ -5,5 +5,6 @@
     <color name="colorAccent">#95D1AF</color>
     <color name="saveButtonStateOff">#e1dad2</color>
     <color name="saveButtonStateOn">#95D1AF</color>
+    <color name="favoriteButtonStateOn">#EDDD14</color>
     <color name="textColor">#454545</color>
 </resources>
