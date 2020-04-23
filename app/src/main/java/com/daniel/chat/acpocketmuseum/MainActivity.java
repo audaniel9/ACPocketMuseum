@@ -15,9 +15,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.daniel.chat.acpocketmuseum.adapter.MuseumSpecimenAdapter;
-import com.daniel.chat.acpocketmuseum.fragment.MuseumFragment;
-import com.daniel.chat.acpocketmuseum.model.MuseumSpecimen;
+import com.daniel.chat.acpocketmuseum.Adapter.MuseumSpecimenAdapter;
+import com.daniel.chat.acpocketmuseum.Fragment.MuseumFragment;
+import com.daniel.chat.acpocketmuseum.Model.MuseumSpecimen;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
