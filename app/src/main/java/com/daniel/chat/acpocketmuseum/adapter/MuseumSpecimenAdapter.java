@@ -28,14 +28,15 @@ public class MuseumSpecimenAdapter extends RecyclerView.Adapter<MuseumSpecimenAd
     private List<MuseumSpecimen> museumSpecimenListStatic;
     private OnItemClickListener itemListener;
 
-    private static final String prefs = "prefs";
-    private static final String prefSaveButtonState = "id";
-    private boolean prefSaveButtonChecked;
+    private static final String saveButtonPrefs = "savePrefs";
+    private static final String favoriteButtonPrefs = "favoritePrefs";
+    private static final String prefButtonIdPrefix = "id";
 
     // Click listener interface
     public interface OnItemClickListener {
         void onCardItemClick(int position);
         void onSaveButtonClick(long id, ToggleButton saveButton);
+        void onFavoriteButtonClick(long id, ToggleButton favoriteButton);
     }
 
     // Adapter constructor
@@ -61,7 +62,8 @@ public class MuseumSpecimenAdapter extends RecyclerView.Adapter<MuseumSpecimenAd
         holder.priceTextView.setText(museumSpecimenList.get(position).getPrice());
         holder.timesTextView.setText(museumSpecimenList.get(position).getTimes());
 
-        loadData(holder);
+        loadDataSaveButton(holder);
+        loadDataFavoriteButton(holder);
     }
 
     @Override
@@ -69,21 +71,39 @@ public class MuseumSpecimenAdapter extends RecyclerView.Adapter<MuseumSpecimenAd
         return museumSpecimenList.size();
     }
 
-    // Load data through SharedPreferences
-    public void loadData(ViewHolder holder) {
-        SharedPreferences sharedPreferences = holder.saveButton.getContext().getSharedPreferences(prefs, Context.MODE_PRIVATE);
-        prefSaveButtonChecked = sharedPreferences.getBoolean(prefSaveButtonState + holder.getItemId(), false);
+    // Load save button state through SharedPreferences
+    public void loadDataSaveButton(ViewHolder holder) {
+        SharedPreferences sharedPreferences = holder.saveButton.getContext().getSharedPreferences(saveButtonPrefs, Context.MODE_PRIVATE);
+        boolean prefSaveButtonChecked = sharedPreferences.getBoolean(prefButtonIdPrefix + holder.getItemId(), false);
 
         // Update view
         holder.saveButton.setChecked(prefSaveButtonChecked);
     }
 
-    // Save data through SharedPreferences
-    public void saveData(long id, ToggleButton saveButton) {
-        SharedPreferences sharedPreferences = saveButton.getContext().getSharedPreferences(prefs, Context.MODE_PRIVATE);
+    // Load favorite button state through SharedPreferences
+    public void loadDataFavoriteButton(ViewHolder holder) {
+        SharedPreferences sharedPreferences = holder.favoriteButton.getContext().getSharedPreferences(favoriteButtonPrefs, Context.MODE_PRIVATE);
+        boolean prefFavoriteButtonChecked = sharedPreferences.getBoolean(prefButtonIdPrefix + holder.getItemId(), false);
+
+        // Update view
+        holder.favoriteButton.setChecked((prefFavoriteButtonChecked));
+    }
+
+    // Save save button state through SharedPreferences
+    public void saveDataSaveButton(long id, ToggleButton saveButton) {
+        SharedPreferences sharedPreferences = saveButton.getContext().getSharedPreferences(saveButtonPrefs, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putBoolean(prefSaveButtonState + id, saveButton.isChecked());
+        editor.putBoolean(prefButtonIdPrefix + id, saveButton.isChecked());
+        editor.apply();
+    }
+
+    // Save favorite button state through SharedPreferences
+    public void saveDataFavoriteButton(long id, ToggleButton favoriteButton) {
+        SharedPreferences sharedPreferences = favoriteButton.getContext().getSharedPreferences(favoriteButtonPrefs, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putBoolean(prefButtonIdPrefix + id, favoriteButton.isChecked());
         editor.apply();
     }
 
@@ -161,6 +181,7 @@ public class MuseumSpecimenAdapter extends RecyclerView.Adapter<MuseumSpecimenAd
         public TextView priceTextView;
         public TextView timesTextView;
         public ToggleButton saveButton;
+        public ToggleButton favoriteButton;
 
         public ViewHolder(final View itemView, final OnItemClickListener listener) {
             super(itemView);
@@ -169,6 +190,7 @@ public class MuseumSpecimenAdapter extends RecyclerView.Adapter<MuseumSpecimenAd
             priceTextView = itemView.findViewById(R.id.price);
             timesTextView = itemView.findViewById(R.id.times);
             saveButton = itemView.findViewById(R.id.saveButton);
+            favoriteButton = itemView.findViewById((R.id.favoriteButton));
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -189,6 +211,18 @@ public class MuseumSpecimenAdapter extends RecyclerView.Adapter<MuseumSpecimenAd
                         int position = getLayoutPosition();
                         if(position != RecyclerView.NO_POSITION) {
                             listener.onSaveButtonClick(id, saveButton);
+                        }
+                    }
+                }
+            });
+
+            favoriteButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(listener != null) {
+                        long id = getItemId();
+                        int position = getLayoutPosition();
+                        if(position != RecyclerView.NO_POSITION) {
+                            listener.onFavoriteButtonClick(id, favoriteButton);
                         }
                     }
                 }

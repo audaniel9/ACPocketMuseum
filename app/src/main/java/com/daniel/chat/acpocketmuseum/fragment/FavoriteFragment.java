@@ -1,6 +1,18 @@
 package com.daniel.chat.acpocketmuseum.Fragment;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.lifecycle.ViewModelProvider;
+
+import android.graphics.Color;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -9,45 +21,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ToggleButton;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.daniel.chat.acpocketmuseum.ViewModel.SharedViewModel;
-import com.daniel.chat.acpocketmuseum.R;
 import com.daniel.chat.acpocketmuseum.Adapter.MuseumSpecimenAdapter;
 import com.daniel.chat.acpocketmuseum.Model.MuseumSpecimen;
+import com.daniel.chat.acpocketmuseum.R;
+import com.daniel.chat.acpocketmuseum.ViewModel.SharedViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;
 
-public class MuseumFragment extends Fragment {
+public class FavoriteFragment extends Fragment {
     private SharedViewModel sharedViewModel;
     private MuseumSpecimenAdapter adapter;
     private MenuItem prevMenuItem;  // For toolbar menu use
 
-    // Interface to communicate data from main activity -> this fragment
-    public static MuseumFragment newInstance() {
-        return new MuseumFragment();
+    public static FavoriteFragment newInstance() {
+        return new FavoriteFragment();
     }
 
-    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_museum, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_favorite, container, false);
 
         // Assign view model
         sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
 
         // Set toolbar title
-        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle("Museum");
+        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle("Favorites");
 
         // Set toolbar menus
         setHasOptionsMenu(true);
@@ -125,13 +126,14 @@ public class MuseumFragment extends Fragment {
 
     // Build the recycler view
     private void buildRecyclerView(View rootView) {
-        RecyclerView museumRecyclerView = rootView.findViewById(R.id.museumRecyclerView);
+        RecyclerView favoriteRecyclerView = rootView.findViewById(R.id.favoriteRecyclerView);
         final List<MuseumSpecimen> museumSpecimenList = sharedViewModel.getMuseumSpecimenList();
         final List<MuseumSpecimen> museumSpecimenListFishOnly = sharedViewModel.getMuseumSpecimenListFishOnly();
         final List<MuseumSpecimen> museumSpecimenListInsectOnly = sharedViewModel.getMuseumSpecimenListInsectOnly();
 
-        museumRecyclerView.setHasFixedSize(true);
-        museumRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())); // change this to implement grid view i think?
+        favoriteRecyclerView.setHasFixedSize(true);
+        favoriteRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())); // change this to implement grid view i think?
+        favoriteRecyclerView.setBackgroundColor(Color.YELLOW);   // TEMP
 
         adapter = new MuseumSpecimenAdapter(museumSpecimenList, museumSpecimenListFishOnly, museumSpecimenListInsectOnly);
         adapter.setHasStableIds(true);
@@ -166,7 +168,7 @@ public class MuseumFragment extends Fragment {
             }
         });
 
-        museumRecyclerView.setAdapter(adapter);
+        favoriteRecyclerView.setAdapter(adapter);
     }
 
 }
