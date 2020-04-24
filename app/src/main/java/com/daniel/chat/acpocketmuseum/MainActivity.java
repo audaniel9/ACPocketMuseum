@@ -70,27 +70,26 @@ public class MainActivity extends AppCompatActivity {
                 R.id.fragment_container, MuseumFragment.newInstance())
                 .addToBackStack(null).commit();
 
-        navigationView.setCheckedItem(R.id.museum); // Set Museum menu item in navigation drawer to checked
-
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if(!(navigationView.getCheckedItem() == item)) {
-                    switch(item.getItemId()) {
-                        case R.id.museum:
+                switch(item.getItemId()) {
+                    case R.id.museum:
+                        if(!currentFragment.equals("MuseumFragment")) {
                             getSupportFragmentManager().beginTransaction()
                                     .setCustomAnimations(R.anim.enter_from_bottom, R.anim.fade_out)
                                     .replace(R.id.fragment_container, MuseumFragment.newInstance())
                                     .addToBackStack(null).commit();
-                            break;
-                        case R.id.favorites:
+                        }
+                        break;
+                    case R.id.favorites:
+                        if(!currentFragment.equals("FavoriteFragment")) {
                             getSupportFragmentManager().beginTransaction()
                                     .setCustomAnimations(R.anim.enter_from_bottom, R.anim.fade_out)
                                     .replace(R.id.fragment_container, FavoriteFragment.newInstance())
                                     .addToBackStack(null).commit();
-                            break;
-                    }
-                    navigationView.setCheckedItem(item.getItemId());
+                        }
+                        break;
                 }
 
                 drawer.closeDrawer(GravityCompat.START);
