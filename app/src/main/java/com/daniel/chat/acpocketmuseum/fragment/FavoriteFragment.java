@@ -133,7 +133,6 @@ public class FavoriteFragment extends Fragment {
 
         favoriteRecyclerView.setHasFixedSize(true);
         favoriteRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())); // change this to implement grid view i think?
-        favoriteRecyclerView.setBackgroundColor(Color.YELLOW);   // TEMP
 
         adapter = new MuseumSpecimenAdapter(museumSpecimenList, museumSpecimenListFishOnly, museumSpecimenListInsectOnly);
         adapter.setHasStableIds(true);
