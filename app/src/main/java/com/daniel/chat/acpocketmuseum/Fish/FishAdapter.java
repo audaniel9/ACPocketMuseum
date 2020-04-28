@@ -1,4 +1,4 @@
-package com.daniel.chat.acpocketmuseum.Adapter;
+package com.daniel.chat.acpocketmuseum.Fish;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.daniel.chat.acpocketmuseum.Model.MuseumSpecimen;
 import com.daniel.chat.acpocketmuseum.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -20,17 +19,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MuseumSpecimenAdapter extends RecyclerView.Adapter<MuseumSpecimenAdapter.ViewHolder> implements Filterable {
-    private List<MuseumSpecimen> museumSpecimenList;
-    private List<MuseumSpecimen> museumSpecimenListFishOnly;
-    private List<MuseumSpecimen> museumSpecimenListInsectOnly;
-    private List<MuseumSpecimen> museumSpecimenListFull;
-    private List<MuseumSpecimen> museumSpecimenListStatic;
+public class FishAdapter extends RecyclerView.Adapter<FishAdapter.ViewHolder> implements Filterable {
+    private List<Fish> fishList;
+    private List<Fish> fishListFull;
+    private List<Fish> fishListStatic;
     private OnItemClickListener itemListener;
 
-    private static final String saveButtonPrefs = "savePrefs";
-    private static final String favoriteButtonPrefs = "favoritePrefs";
-    private static final String prefButtonIdPrefix = "id";
+    private static final String saveButtonPrefs = "saveFishPrefs";
+    private static final String favoriteButtonPrefs = "favoriteFishPrefs";
+    private static final String prefButtonIdPrefix = "fishId";
 
     // Click listener interface
     public interface OnItemClickListener {
@@ -40,12 +37,10 @@ public class MuseumSpecimenAdapter extends RecyclerView.Adapter<MuseumSpecimenAd
     }
 
     // Adapter constructor
-    public MuseumSpecimenAdapter(List<MuseumSpecimen> museumSpecimenList, List<MuseumSpecimen> museumSpecimenListFishOnly, List<MuseumSpecimen> museumSpecimenListInsectOnly) {
-        this.museumSpecimenList = museumSpecimenList;
-        this.museumSpecimenListFishOnly = museumSpecimenListFishOnly;
-        this.museumSpecimenListInsectOnly = museumSpecimenListInsectOnly;
-        this.museumSpecimenListFull = new ArrayList<>(museumSpecimenList);
-        this.museumSpecimenListStatic = new ArrayList<>(museumSpecimenList);
+    public FishAdapter(List<Fish> fishList) {
+        this.fishList = fishList;
+        this.fishListFull = new ArrayList<>(fishList);
+        this.fishListStatic = new ArrayList<>(fishList);
     }
 
     @NotNull
@@ -57,10 +52,10 @@ public class MuseumSpecimenAdapter extends RecyclerView.Adapter<MuseumSpecimenAd
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.specimenNameTextView.setText(museumSpecimenList.get(position).getSpecimenName());
-        holder.locationTextView.setText(museumSpecimenList.get(position).getLocation());
-        holder.priceTextView.setText(museumSpecimenList.get(position).getPrice());
-        holder.timesTextView.setText(museumSpecimenList.get(position).getTimes());
+        holder.nameTextView.setText(fishList.get(position).getName());
+        holder.locationTextView.setText(fishList.get(position).getLocation());
+        holder.priceTextView.setText(fishList.get(position).getPrice());
+        holder.timesTextView.setText(fishList.get(position).getTimes());
 
         loadDataSaveButton(holder);
         loadDataFavoriteButton(holder);
@@ -68,7 +63,7 @@ public class MuseumSpecimenAdapter extends RecyclerView.Adapter<MuseumSpecimenAd
 
     @Override
     public int getItemCount() {
-        return museumSpecimenList.size();
+        return fishList.size();
     }
 
     // Load save button state through SharedPreferences
@@ -109,62 +104,55 @@ public class MuseumSpecimenAdapter extends RecyclerView.Adapter<MuseumSpecimenAd
 
     @Override
     public long getItemId(int position) {
-        return museumSpecimenList.get(position).getId();
+        return fishList.get(position).getId();
     }
 
     @Override
     public Filter getFilter() {
-        return listFilter;
+        return fishFilter;
     }
 
     // Filter logic
-    private Filter listFilter = new Filter() {
+    private Filter fishFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
-            List<MuseumSpecimen> museumSpecimenListFiltered = new ArrayList<>();
+            List<Fish> fishListFiltered = new ArrayList<>();
 
             if(charSequence == null || charSequence.length() == 0) {
-                museumSpecimenListFiltered.addAll(museumSpecimenListFull);
+                fishListFiltered.addAll(fishListFull);
             }
             else {
                 String searchString = charSequence.toString().toLowerCase().trim();
 
-                for(MuseumSpecimen specimen : museumSpecimenListFull) {
-                    if(specimen.getSpecimenName().toLowerCase().startsWith(searchString)) {
-                        museumSpecimenListFiltered.add(specimen);
+                for(Fish fish : fishListFull) {
+                    if(fish.getName().toLowerCase().startsWith(searchString)) {
+                        fishListFiltered.add(fish);
                     }
                 }
             }
 
             if(charSequence == "@sortDefault") {
-                museumSpecimenListFiltered.addAll(museumSpecimenListStatic);
+                fishListFiltered.addAll(fishListStatic);
             }
             else if(charSequence == "@sortAZ") {
-                Collections.sort(museumSpecimenListFull, MuseumSpecimen.MuseumSpecimenSortAscending);
-                museumSpecimenListFiltered.addAll(museumSpecimenListFull);
+                Collections.sort(fishListFull, Fish.FishSortAscending);
+                fishListFiltered.addAll(fishListFull);
             }
             else if(charSequence == "@sortZA") {
-                Collections.sort(museumSpecimenListFull, MuseumSpecimen.MuseumSpecimenSortDescending);
-                museumSpecimenListFiltered.addAll(museumSpecimenListFull);
-            }
-            else if(charSequence == "@filterFish") {
-                museumSpecimenListFiltered.addAll(museumSpecimenListFishOnly);
-            }
-            else if(charSequence == "@filterInsect") {
-                museumSpecimenListFiltered.addAll(museumSpecimenListInsectOnly);
+                Collections.sort(fishListFull, Fish.FishSortDescending);
+                fishListFiltered.addAll(fishListFull);
             }
 
             FilterResults filterResults = new FilterResults();
-            filterResults.values = museumSpecimenListFiltered;
+            filterResults.values = fishListFiltered;
 
             return filterResults;
         }
 
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            museumSpecimenList.clear();
-            museumSpecimenList.addAll((List) filterResults.values);
-            System.out.println(museumSpecimenListStatic);
+            fishList.clear();
+            fishList.addAll((List) filterResults.values);
             notifyDataSetChanged();
         }
     };
@@ -175,8 +163,7 @@ public class MuseumSpecimenAdapter extends RecyclerView.Adapter<MuseumSpecimenAd
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView specimenNameTextView;
+        public TextView nameTextView;
         public TextView locationTextView;
         public TextView priceTextView;
         public TextView timesTextView;
@@ -185,7 +172,7 @@ public class MuseumSpecimenAdapter extends RecyclerView.Adapter<MuseumSpecimenAd
 
         public ViewHolder(final View itemView, final OnItemClickListener listener) {
             super(itemView);
-            specimenNameTextView = itemView.findViewById(R.id.specimenName);
+            nameTextView = itemView.findViewById(R.id.specimenName);
             locationTextView = itemView.findViewById(R.id.location);
             priceTextView = itemView.findViewById(R.id.price);
             timesTextView = itemView.findViewById(R.id.times);

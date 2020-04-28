@@ -13,8 +13,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.daniel.chat.acpocketmuseum.Fragment.FavoriteFragment;
-import com.daniel.chat.acpocketmuseum.Fragment.MuseumFragment;
+import com.daniel.chat.acpocketmuseum.Favorite.FavoriteFragment;
+import com.daniel.chat.acpocketmuseum.Fish.FishFragment;
+import com.daniel.chat.acpocketmuseum.Insect.InsectFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             drawer.closeDrawer(GravityCompat.START);
         }
 
-        if(currentFragment.equals("MuseumFragment")) {
+        if(currentFragment.equals("FishFragment")) {
             finish();   // End activity
         }
         else {
@@ -67,18 +68,26 @@ public class MainActivity extends AppCompatActivity {
 
         // Set museum fragment to start when activity starts
         getSupportFragmentManager().beginTransaction().replace(
-                R.id.fragment_container, MuseumFragment.newInstance())
+                R.id.fragment_container, FishFragment.newInstance())
                 .addToBackStack(null).commit();
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()) {
-                    case R.id.museum:
-                        if(!currentFragment.equals("MuseumFragment")) {
+                    case R.id.fish:
+                        if(!currentFragment.equals("FishFragment")) {
                             getSupportFragmentManager().beginTransaction()
                                     .setCustomAnimations(R.anim.enter_from_bottom, R.anim.fade_out)
-                                    .replace(R.id.fragment_container, MuseumFragment.newInstance())
+                                    .replace(R.id.fragment_container, FishFragment.newInstance())
+                                    .addToBackStack(null).commit();
+                        }
+                        break;
+                    case R.id.insect:
+                        if(!currentFragment.equals("InsectFragment")) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .setCustomAnimations(R.anim.enter_from_bottom, R.anim.fade_out)
+                                    .replace(R.id.fragment_container, InsectFragment.newInstance())
                                     .addToBackStack(null).commit();
                         }
                         break;

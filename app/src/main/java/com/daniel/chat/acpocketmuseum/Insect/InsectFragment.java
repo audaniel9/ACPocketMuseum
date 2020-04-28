@@ -1,17 +1,6 @@
-package com.daniel.chat.acpocketmuseum.Fragment;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.lifecycle.ViewModelProvider;
+package com.daniel.chat.acpocketmuseum.Insect;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,37 +9,42 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ToggleButton;
 
-import com.daniel.chat.acpocketmuseum.Adapter.MuseumSpecimenAdapter;
-import com.daniel.chat.acpocketmuseum.Model.MuseumSpecimen;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.daniel.chat.acpocketmuseum.R;
-import com.daniel.chat.acpocketmuseum.ViewModel.SharedViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;
 
-public class FavoriteFragment extends Fragment {
-    private SharedViewModel sharedViewModel;
-    private MuseumSpecimenAdapter adapter;
+public class InsectFragment extends Fragment {
+    private InsectViewModel insectViewModel;
+    private InsectAdapter adapter;
     private MenuItem prevMenuItem;  // For toolbar menu use
 
-    public static FavoriteFragment newInstance() {
-        return new FavoriteFragment();
+    // Interface to communicate data from main activity -> this fragment
+    public static InsectFragment newInstance() {
+        return new InsectFragment();
     }
 
+    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_favorite, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_insect, container, false);
 
-        // Assign view model
-        sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+        insectViewModel = new ViewModelProvider(this).get(InsectViewModel.class);   // Assign view model
 
-        // Set toolbar title
-        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle("Favorites");
+        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle("Insects"); // Set toolbar title
 
-        // Set toolbar menus
-        setHasOptionsMenu(true);
+        setHasOptionsMenu(true);    // Set toolbar menus
 
         buildRecyclerView(rootView);
 
@@ -100,14 +94,6 @@ public class FavoriteFragment extends Fragment {
                 adapter.getFilter().filter("@sortZA");
                 toggleCheck(item);
                 return true;
-            case R.id.filterFish:
-                adapter.getFilter().filter("@filterFish");
-                toggleCheck(item);
-                return true;
-            case R.id.filterInsect:
-                adapter.getFilter().filter("@filterInsect");
-                toggleCheck(item);
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -125,48 +111,43 @@ public class FavoriteFragment extends Fragment {
 
     // Build the recycler view
     private void buildRecyclerView(View rootView) {
-        RecyclerView favoriteRecyclerView = rootView.findViewById(R.id.favoriteRecyclerView);
-        final List<MuseumSpecimen> museumSpecimenList = sharedViewModel.getMuseumSpecimenList();
-        final List<MuseumSpecimen> museumSpecimenListFishOnly = sharedViewModel.getMuseumSpecimenListFishOnly();
-        final List<MuseumSpecimen> museumSpecimenListInsectOnly = sharedViewModel.getMuseumSpecimenListInsectOnly();
+        RecyclerView insectRecyclerView = rootView.findViewById(R.id.insectRecyclerView);
+        final List<Insect> insectList = insectViewModel.getInsectList();
 
-        favoriteRecyclerView.setHasFixedSize(true);
-        favoriteRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())); // change this to implement grid view i think?
+        insectRecyclerView.setHasFixedSize(true);
+        insectRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new MuseumSpecimenAdapter(museumSpecimenList, museumSpecimenListFishOnly, museumSpecimenListInsectOnly);
+        adapter = new InsectAdapter(insectList);
         adapter.setHasStableIds(true);
 
-        adapter.setOnItemClickListener(new MuseumSpecimenAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new InsectAdapter.OnItemClickListener() {
             @Override
             public void onCardItemClick(int position) {
                 getParentFragmentManager().beginTransaction()
                         .setCustomAnimations(R.anim.enter_from_bottom, R.anim.fade_out)
-                        .replace(R.id.fragment_container, InfoFragment.newInstance(museumSpecimenList.get(position)))
+                        .replace(R.id.fragment_container, InsectDetailsFragment.newInstance(insectList.get(position)))
                         .addToBackStack(null).commit();
             }
 
             @Override
             public void onSaveButtonClick(long id, ToggleButton saveButton) {
-                if(saveButton.isChecked()) {
+                if (saveButton.isChecked()) {
                     adapter.saveDataSaveButton(id, saveButton);
-                }
-                else {
+                } else {
                     adapter.saveDataSaveButton(id, saveButton);
                 }
             }
 
             @Override
             public void onFavoriteButtonClick(long id, ToggleButton favoriteButton) {
-                if(favoriteButton.isChecked()) {
+                if (favoriteButton.isChecked()) {
                     adapter.saveDataFavoriteButton(id, favoriteButton);
-                }
-                else {
+                } else {
                     adapter.saveDataFavoriteButton(id, favoriteButton);
                 }
             }
         });
 
-        favoriteRecyclerView.setAdapter(adapter);
+        insectRecyclerView.setAdapter(adapter);
     }
-
 }

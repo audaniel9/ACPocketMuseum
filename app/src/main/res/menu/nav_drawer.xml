@@ -5,9 +5,14 @@
 
     <group android:checkableBehavior="none">
         <item
-            android:id="@+id/museum"
+            android:id="@+id/fish"
             android:icon="@drawable/ic_list"
-            android:title="Museum" />
+            android:title="Fish" />
+
+        <item
+            android:id="@+id/insect"
+            android:icon="@drawable/ic_list"
+            android:title="Insects"/>
 
         <item
             android:id="@+id/favorites"

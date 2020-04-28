@@ -1,4 +1,4 @@
-package com.daniel.chat.acpocketmuseum.Fragment;
+package com.daniel.chat.acpocketmuseum.Fish;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,39 +18,33 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.daniel.chat.acpocketmuseum.ViewModel.SharedViewModel;
 import com.daniel.chat.acpocketmuseum.R;
-import com.daniel.chat.acpocketmuseum.Adapter.MuseumSpecimenAdapter;
-import com.daniel.chat.acpocketmuseum.Model.MuseumSpecimen;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;
 
-public class MuseumFragment extends Fragment {
-    private SharedViewModel sharedViewModel;
-    private MuseumSpecimenAdapter adapter;
+public class FishFragment extends Fragment {
+    private FishViewModel fishViewModel;
+    private FishAdapter adapter;
     private MenuItem prevMenuItem;  // For toolbar menu use
 
     // Interface to communicate data from main activity -> this fragment
-    public static MuseumFragment newInstance() {
-        return new MuseumFragment();
+    public static FishFragment newInstance() {
+        return new FishFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_museum, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_fish, container, false);
 
-        // Assign view model
-        sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+        fishViewModel = new ViewModelProvider(this).get(FishViewModel.class);   // Assign view model
 
-        // Set toolbar title
-        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle("Museum");
+        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle("Fish"); // Set toolbar title
 
-        // Set toolbar menus
-        setHasOptionsMenu(true);
+        setHasOptionsMenu(true);    // Set toolbar menus
 
         buildRecyclerView(rootView);
 
@@ -100,14 +94,6 @@ public class MuseumFragment extends Fragment {
                 adapter.getFilter().filter("@sortZA");
                 toggleCheck(item);
                 return true;
-            case R.id.filterFish:
-                adapter.getFilter().filter("@filterFish");
-                toggleCheck(item);
-                return true;
-            case R.id.filterInsect:
-                adapter.getFilter().filter("@filterInsect");
-                toggleCheck(item);
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -125,23 +111,21 @@ public class MuseumFragment extends Fragment {
 
     // Build the recycler view
     private void buildRecyclerView(View rootView) {
-        RecyclerView museumRecyclerView = rootView.findViewById(R.id.museumRecyclerView);
-        final List<MuseumSpecimen> museumSpecimenList = sharedViewModel.getMuseumSpecimenList();
-        final List<MuseumSpecimen> museumSpecimenListFishOnly = sharedViewModel.getMuseumSpecimenListFishOnly();
-        final List<MuseumSpecimen> museumSpecimenListInsectOnly = sharedViewModel.getMuseumSpecimenListInsectOnly();
+        RecyclerView fishRecyclerView = rootView.findViewById(R.id.fishRecyclerView);
+        final List<Fish> fishList = fishViewModel.getFishList();
 
-        museumRecyclerView.setHasFixedSize(true);
-        museumRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())); // change this to implement grid view i think?
+        fishRecyclerView.setHasFixedSize(true);
+        fishRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())); // change this to implement grid view i think?
 
-        adapter = new MuseumSpecimenAdapter(museumSpecimenList, museumSpecimenListFishOnly, museumSpecimenListInsectOnly);
+        adapter = new FishAdapter(fishList);
         adapter.setHasStableIds(true);
 
-        adapter.setOnItemClickListener(new MuseumSpecimenAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new FishAdapter.OnItemClickListener() {
             @Override
             public void onCardItemClick(int position) {
                 getParentFragmentManager().beginTransaction()
                         .setCustomAnimations(R.anim.enter_from_bottom, R.anim.fade_out)
-                        .replace(R.id.fragment_container, InfoFragment.newInstance(museumSpecimenList.get(position)))
+                        .replace(R.id.fragment_container, FishDetailsFragment.newInstance(fishList.get(position)))
                         .addToBackStack(null).commit();
             }
 
@@ -166,7 +150,7 @@ public class MuseumFragment extends Fragment {
             }
         });
 
-        museumRecyclerView.setAdapter(adapter);
+        fishRecyclerView.setAdapter(adapter);
     }
 
 }

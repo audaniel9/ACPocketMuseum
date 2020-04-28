@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="16dp"
-    tools:context=".fragment.InfoFragment">
+    tools:context=".Insect.InsectDetailsFragment">
 
     <TextView
-        android:id="@+id/infoSpecimenName"
+        android:id="@+id/insectDetailsName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Name"
@@ -17,33 +17,33 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/infoPrice"
+        android:id="@+id/insectDetailsPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="Price"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/infoSpecimenName" />
+        app:layout_constraintTop_toBottomOf="@+id/insectDetailsName" />
 
     <TextView
-        android:id="@+id/infoTimes"
+        android:id="@+id/insectDetailsTimes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="Times"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/infoLocation" />
+        app:layout_constraintTop_toBottomOf="@+id/insectDetailsLocation" />
 
     <TextView
-        android:id="@+id/infoLocation"
+        android:id="@+id/insectDetailsLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="Location"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/infoPrice" />
+        app:layout_constraintTop_toBottomOf="@+id/insectDetailsPrice" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
