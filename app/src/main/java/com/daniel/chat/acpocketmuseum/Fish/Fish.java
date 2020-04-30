@@ -1,31 +1,21 @@
 package com.daniel.chat.acpocketmuseum.Fish;
 
 import android.os.Parcel;
-import android.os.Parcelable;
+
+import com.daniel.chat.acpocketmuseum.MuseumSpecimen;
+
 import java.util.Comparator;
 
-public class Fish implements Parcelable {
-    private int id;
-    private String name;
-    private String location;
-    private String price;
-    private String times;
+public class Fish extends MuseumSpecimen {
 
     // Constructor
     public Fish(int id, String name, String location, String price, String times) {
-        this.id = id;
-        this.name = name;
-        this.location = location;
-        this.price = price;
-        this.times = times;
+        super(id, name, location, price, times);
     }
 
     // Parcelable constructor
     protected Fish(Parcel in) {
-        name = in.readString();
-        location = in.readString();
-        price = in.readString();
-        times = in.readString();
+        super(in);
     }
 
     // Parcelable stuff; leave as is
@@ -41,26 +31,6 @@ public class Fish implements Parcelable {
         }
     };
 
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public String getTimes() {
-        return times;
-    }
-
     public static Comparator<Fish> FishSortAscending = new Comparator<Fish>() {
         @Override
         public int compare(Fish fish, Fish fish2) {
@@ -74,17 +44,4 @@ public class Fish implements Parcelable {
             return fish2.getName().compareTo(fish.getName());
         }
     };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(name);
-        parcel.writeString(location);
-        parcel.writeString(price);
-        parcel.writeString(times);
-    }
 }

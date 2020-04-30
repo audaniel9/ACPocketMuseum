@@ -178,7 +178,7 @@ public class InsectAdapter extends RecyclerView.Adapter<InsectAdapter.ViewHolder
             priceTextView = itemView.findViewById(R.id.price);
             timesTextView = itemView.findViewById(R.id.times);
             saveButton = itemView.findViewById(R.id.saveButton);
-            favoriteButton = itemView.findViewById((R.id.favoriteButton));
+            favoriteButton = itemView.findViewById(R.id.favoriteButton);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -196,7 +196,7 @@ public class InsectAdapter extends RecyclerView.Adapter<InsectAdapter.ViewHolder
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(listener != null) {
                         long id = getItemId();
-                        int position = getLayoutPosition();
+                        int position = getAdapterPosition();
                         if(position != RecyclerView.NO_POSITION) {
                             listener.onSaveButtonClick(id, saveButton);
                         }
@@ -208,7 +208,7 @@ public class InsectAdapter extends RecyclerView.Adapter<InsectAdapter.ViewHolder
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(listener != null) {
                         long id = getItemId();
-                        int position = getLayoutPosition();
+                        int position = getAdapterPosition();
                         if(position != RecyclerView.NO_POSITION) {
                             listener.onFavoriteButtonClick(id, favoriteButton);
                         }

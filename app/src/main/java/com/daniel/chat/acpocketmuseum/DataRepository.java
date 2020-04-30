@@ -1,6 +1,10 @@
 package com.daniel.chat.acpocketmuseum;
 
 import android.content.Context;
+import android.util.Log;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.daniel.chat.acpocketmuseum.Fish.Fish;
 import com.daniel.chat.acpocketmuseum.Insect.Insect;
@@ -19,9 +23,11 @@ public class DataRepository {
     private Context context;
     private List<Fish> fishList;
     private List<Insect> insectList;
+    private MutableLiveData<List<MuseumSpecimen>> favoriteList;
 
     public DataRepository(Context context) {
         this.context = context;
+        favoriteList = new MutableLiveData<>();
     }
 
     // Parse and get fish data
@@ -72,6 +78,15 @@ public class DataRepository {
         }
 
         return insectList;
+    }
+
+    public MutableLiveData<List<MuseumSpecimen>> getFavoriteListFromRepo() {
+        Log.d("GetFromRepo", favoriteList.toString());
+        return favoriteList;
+    }
+
+    public void setFavoriteListFromRepo(List<MuseumSpecimen> list) {
+        favoriteList.setValue(list);
     }
 
     // Reads JSON file

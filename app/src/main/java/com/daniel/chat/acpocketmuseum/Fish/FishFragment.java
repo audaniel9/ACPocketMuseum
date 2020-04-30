@@ -7,6 +7,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
@@ -18,10 +19,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.daniel.chat.acpocketmuseum.MuseumSpecimen;
 import com.daniel.chat.acpocketmuseum.R;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -40,7 +43,7 @@ public class FishFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_fish, container, false);
 
-        fishViewModel = new ViewModelProvider(this).get(FishViewModel.class);   // Assign view model
+        fishViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(FishViewModel.class);   // Assign view model
 
         Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle("Fish"); // Set toolbar title
 
@@ -140,12 +143,18 @@ public class FishFragment extends Fragment {
             }
 
             @Override
-            public void onFavoriteButtonClick(long id, ToggleButton favoriteButton) {
+            public void onFavoriteButtonClick(long id, ToggleButton favoriteButton, final int position) {
                 if(favoriteButton.isChecked()) {
                     adapter.saveDataFavoriteButton(id, favoriteButton);
+
+                    List<MuseumSpecimen> fishToAdd = new ArrayList<>();
+                    fishToAdd.add(fishList.get(position));  // May only result in fav having 1 thing
+                    fishViewModel.setFavoriteList(fishToAdd);
+                    Toast.makeText(getContext(), "buttonPressed", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     adapter.saveDataFavoriteButton(id, favoriteButton);
+                    //fishViewModel.removeFavoriteFish(fishList.get(position));
                 }
             }
         });

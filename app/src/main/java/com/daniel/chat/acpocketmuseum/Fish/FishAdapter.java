@@ -33,7 +33,7 @@ public class FishAdapter extends RecyclerView.Adapter<FishAdapter.ViewHolder> im
     public interface OnItemClickListener {
         void onCardItemClick(int position);
         void onSaveButtonClick(long id, ToggleButton saveButton);
-        void onFavoriteButtonClick(long id, ToggleButton favoriteButton);
+        void onFavoriteButtonClick(long id, ToggleButton favoriteButton, int position);
     }
 
     // Adapter constructor
@@ -177,7 +177,7 @@ public class FishAdapter extends RecyclerView.Adapter<FishAdapter.ViewHolder> im
             priceTextView = itemView.findViewById(R.id.price);
             timesTextView = itemView.findViewById(R.id.times);
             saveButton = itemView.findViewById(R.id.saveButton);
-            favoriteButton = itemView.findViewById((R.id.favoriteButton));
+            favoriteButton = itemView.findViewById(R.id.favoriteButton);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -195,7 +195,7 @@ public class FishAdapter extends RecyclerView.Adapter<FishAdapter.ViewHolder> im
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(listener != null) {
                         long id = getItemId();
-                        int position = getLayoutPosition();
+                        int position = getAdapterPosition();
                         if(position != RecyclerView.NO_POSITION) {
                             listener.onSaveButtonClick(id, saveButton);
                         }
@@ -207,9 +207,9 @@ public class FishAdapter extends RecyclerView.Adapter<FishAdapter.ViewHolder> im
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(listener != null) {
                         long id = getItemId();
-                        int position = getLayoutPosition();
+                        int position = getAdapterPosition();
                         if(position != RecyclerView.NO_POSITION) {
-                            listener.onFavoriteButtonClick(id, favoriteButton);
+                            listener.onFavoriteButtonClick(id, favoriteButton, position);
                         }
                     }
                 }

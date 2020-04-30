@@ -12,5 +12,5 @@
         android:background="@drawable/yellow_aesthetic"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="0dp"
-        tools:listitem="@layout/museum_specimen_card"/>
+        tools:listitem="@layout/favorites_card"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
