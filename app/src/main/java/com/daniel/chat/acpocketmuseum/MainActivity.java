@@ -12,6 +12,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.daniel.chat.acpocketmuseum.Favorite.FavoriteFragment;
 import com.daniel.chat.acpocketmuseum.Fish.FishFragment;
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.fish:
                         if(!currentFragment.equals("FishFragment")) {
                             getSupportFragmentManager().beginTransaction()
-                                    .setCustomAnimations(R.anim.enter_from_bottom, R.anim.fade_out)
+                                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                     .replace(R.id.fragment_container, FishFragment.newInstance())
                                     .addToBackStack(null).commit();
                         }
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.insect:
                         if(!currentFragment.equals("InsectFragment")) {
                             getSupportFragmentManager().beginTransaction()
-                                    .setCustomAnimations(R.anim.enter_from_bottom, R.anim.fade_out)
+                                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                     .replace(R.id.fragment_container, InsectFragment.newInstance())
                                     .addToBackStack(null).commit();
                         }
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.favorites:
                         if(!currentFragment.equals("FavoriteFragment")) {
                             getSupportFragmentManager().beginTransaction()
-                                    .setCustomAnimations(R.anim.enter_from_bottom, R.anim.fade_out)
+                                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                     .replace(R.id.fragment_container, FavoriteFragment.newInstance())
                                     .addToBackStack(null).commit();
                         }

@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -114,7 +115,7 @@ public class FishFragment extends Fragment {
             @Override
             public void onCardItemClick(int position) {
                 getParentFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.enter_from_bottom, R.anim.fade_out)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .replace(R.id.fragment_container, FishDetailsFragment.newInstance(fishList.get(position)))
                         .addToBackStack(null).commit();
             }
