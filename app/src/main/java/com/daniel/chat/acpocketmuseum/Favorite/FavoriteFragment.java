@@ -52,15 +52,12 @@ public class FavoriteFragment extends Fragment {
         return rootView;
     }
 
-    // Toolbar menu logic
+    // Dynamically set the menu options
     @Override
-    public void onCreateOptionsMenu(@NotNull Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.search_menu, menu);
-        inflater.inflate(R.menu.sort_menu, menu);
-
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
+        // Search menu logic
         final SearchView searchView = (SearchView) menu.findItem(R.id.searchMenu).getActionView();
 
-        // Search menu logic
         searchView.setQueryHint("Search...");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
@@ -76,7 +73,7 @@ public class FavoriteFragment extends Fragment {
             }
         });
 
-        super.onCreateOptionsMenu(menu,inflater);
+        super.onPrepareOptionsMenu(menu);
     }
 
     @Override

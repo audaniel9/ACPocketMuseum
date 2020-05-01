@@ -53,15 +53,12 @@ public class FishFragment extends Fragment {
         return rootView;
     }
 
-    // Toolbar menu logic
+    // Dynamically set the menu options
     @Override
-    public void onCreateOptionsMenu(@NotNull Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.search_menu, menu);
-        inflater.inflate(R.menu.sort_menu, menu);
-
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
+        // Search menu logic
         final SearchView searchView = (SearchView) menu.findItem(R.id.searchMenu).getActionView();
 
-        // Search menu logic
         searchView.setQueryHint("Search...");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
@@ -77,9 +74,37 @@ public class FishFragment extends Fragment {
             }
         });
 
-        super.onCreateOptionsMenu(menu,inflater);
+        super.onPrepareOptionsMenu(menu);
     }
 
+    /*
+        // Toolbar menu logic
+        @Override
+        public void onCreateOptionsMenu(@NotNull Menu menu, MenuInflater inflater) {
+            inflater.inflate(R.menu.search_menu, menu);
+            inflater.inflate(R.menu.sort_menu, menu);
+
+            final SearchView searchView = (SearchView) menu.findItem(R.id.searchMenu).getActionView();
+
+            // Search menu logic
+            searchView.setQueryHint("Search...");
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    adapter.getFilter().filter(newText);
+                    return false;
+                }
+            });
+
+            super.onCreateOptionsMenu(menu,inflater);
+        }
+    */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()) {

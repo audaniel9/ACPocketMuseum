@@ -2,10 +2,12 @@ package com.daniel.chat.acpocketmuseum.Insect;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -75,5 +77,12 @@ public class InsectDetailsFragment extends Fragment {
         return rootView;
     }
 
+    // Dynamically set the menu options
+    @Override
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
+        menu.findItem(R.id.searchMenu).setVisible(false);
+        menu.findItem(R.id.sortMenu).setVisible(false);
 
+        super.onPrepareOptionsMenu(menu);
+    }
 }

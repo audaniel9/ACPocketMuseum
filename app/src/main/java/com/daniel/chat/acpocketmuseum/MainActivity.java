@@ -5,8 +5,10 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -34,6 +36,15 @@ public class MainActivity extends AppCompatActivity {
         buildToolbar();
         buildDrawer();
         fragmentStackListener();
+    }
+
+    // Toolbar menu logic
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+        getMenuInflater().inflate(R.menu.sort_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     // Pressing back button while navigation drawer is open won't close the activity home screen

@@ -2,10 +2,12 @@ package com.daniel.chat.acpocketmuseum.Fish;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -79,5 +81,12 @@ public class FishDetailsFragment extends Fragment {
         return rootView;
     }
 
+    // Dynamically set the menu options
+    @Override
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
+        menu.findItem(R.id.searchMenu).setVisible(false);
+        menu.findItem(R.id.sortMenu).setVisible(false);
 
+        super.onPrepareOptionsMenu(menu);
+    }
 }
