@@ -3,7 +3,6 @@ package com.daniel.chat.acpocketmuseum.Fish;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.daniel.chat.acpocketmuseum.MuseumSharedViewModel;
 import com.daniel.chat.acpocketmuseum.MuseumSpecimen;
 import com.daniel.chat.acpocketmuseum.R;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;
@@ -77,34 +74,6 @@ public class FishFragment extends Fragment {
         super.onPrepareOptionsMenu(menu);
     }
 
-    /*
-        // Toolbar menu logic
-        @Override
-        public void onCreateOptionsMenu(@NotNull Menu menu, MenuInflater inflater) {
-            inflater.inflate(R.menu.search_menu, menu);
-            inflater.inflate(R.menu.sort_menu, menu);
-
-            final SearchView searchView = (SearchView) menu.findItem(R.id.searchMenu).getActionView();
-
-            // Search menu logic
-            searchView.setQueryHint("Search...");
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    return false;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    adapter.getFilter().filter(newText);
-                    return false;
-                }
-            });
-
-            super.onCreateOptionsMenu(menu,inflater);
-        }
-    */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()) {
