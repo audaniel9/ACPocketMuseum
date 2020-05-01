@@ -1,4 +1,4 @@
-package com.daniel.chat.acpocketmuseum.adapter;
+package com.daniel.chat.acpocketmuseum.Adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.daniel.chat.acpocketmuseum.model.MuseumSpecimen;
+import com.daniel.chat.acpocketmuseum.Model.MuseumSpecimen;
 import com.daniel.chat.acpocketmuseum.R;
 
 import org.jetbrains.annotations.NotNull;

@@ -1,4 +1,4 @@
-package com.daniel.chat.acpocketmuseum.fragment;
+package com.daniel.chat.acpocketmuseum.Fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,14 +10,13 @@ import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.daniel.chat.acpocketmuseum.R;
-import com.daniel.chat.acpocketmuseum.adapter.MuseumSpecimenAdapter;
-import com.daniel.chat.acpocketmuseum.model.MuseumSpecimen;
+import com.daniel.chat.acpocketmuseum.Adapter.MuseumSpecimenAdapter;
+import com.daniel.chat.acpocketmuseum.Model.MuseumSpecimen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,11 +100,9 @@ public class MuseumFragment extends Fragment {
             @Override
             public void onSaveButtonClick(long id, ToggleButton saveButton) {
                 if(saveButton.isChecked()) {
-                    saveButton.setBackgroundColor(ContextCompat.getColor(saveButton.getContext(), R.color.saveButtonStateOn));
                     adapter.saveData(id, saveButton);
                 }
                 else {
-                    saveButton.setBackgroundColor(ContextCompat.getColor(saveButton.getContext(), R.color.saveButtonStateOff));
                     adapter.saveData(id, saveButton);
                 }
             }

@@ -56,15 +56,27 @@
 
             <ToggleButton
                 android:id="@+id/saveButton"
-                android:layout_width="60dp"
-                android:layout_height="45dp"
-                android:background="@android:color/darker_gray"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:background="@drawable/save_button_selector"
+                android:foreground="?attr/selectableItemBackground"
                 android:text="SaveButton"
                 android:textOff="Add"
                 android:textOn="Saved"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <ToggleButton
+                android:id="@+id/favoriteButton"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:background="@drawable/favorite_button_selector"
+                android:foreground="?attr/selectableItemBackground"
+                android:text="Favorite"
+                android:textOff="Favorite"
+                android:textOn="♥"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

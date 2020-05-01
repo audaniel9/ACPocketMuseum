@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimary">#83d1dd</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#2DB479</color>
-    <color name="saveButtonStateOff">@android:color/darker_gray</color>
-    <color name="saveButtonStateOn">@android:color/holo_green_light</color>
+    <color name="colorAccent">#95D1AF</color>
+    <color name="saveButtonStateOff">#e1dad2</color>
+    <color name="saveButtonStateOn">#95D1AF</color>
+    <color name="favoriteButtonStateOn">#EDDD14</color>
+    <color name="textColor">#454545</color>
 </resources>

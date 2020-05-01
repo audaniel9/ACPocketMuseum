@@ -1,4 +1,4 @@
-package com.daniel.chat.acpocketmuseum.fragment;
+package com.daniel.chat.acpocketmuseum.Fragment;
 
 import android.os.Bundle;
 
@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.daniel.chat.acpocketmuseum.R;
-import com.daniel.chat.acpocketmuseum.model.MuseumSpecimen;
+import com.daniel.chat.acpocketmuseum.Model.MuseumSpecimen;
 
 import java.util.Objects;
 
