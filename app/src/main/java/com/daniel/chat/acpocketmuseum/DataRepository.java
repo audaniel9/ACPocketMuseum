@@ -43,11 +43,18 @@ public class DataRepository {
 
                 int id = fish.getInt("id");
                 String name = fish.getJSONObject("name").getString("name-en");
-                String location = "Location: " + fish.getJSONObject("availability").getString("location");
-                String price = "Price: " + fish.getString("price") + " bells";
-                String times = "Times: " + (fish.getJSONObject("availability").getString("time").equals("") ? "All day" : fish.getJSONObject("availability").getString("time"));
+                String location = fish.getJSONObject("availability").getString("location");
+                String price = fish.getString("price") + " bells";
+                String times = fish.getJSONObject("availability").getString("time");
+                String rarity = fish.getJSONObject("availability").getString("rarity");
+                String monthsNorthern = fish.getJSONObject("availability").getString("month-northern");
+                String monthsSouthern = fish.getJSONObject("availability").getString("month-southern");
+                String catchphrase = fish.getString("catch-phrase");
+                String museumPhrase = fish.getString("museum-phrase");
+                String priceCJ = fish.getString("price-cj");
+                String shadow = fish.getString("shadow");
 
-                fishList.add(new Fish(id, name, location, price, times));
+                fishList.add(new Fish(id, name, location, price, times, rarity, monthsNorthern, monthsSouthern, catchphrase, museumPhrase, priceCJ, shadow));
             }
         } catch(IOException | JSONException e) {
             e.printStackTrace();
@@ -66,11 +73,17 @@ public class DataRepository {
 
                 int id = insect.getInt("id");
                 String name = insect.getJSONObject("name").getString("name-en");
-                String location = "Location: " + insect.getJSONObject("availability").getString("location");
-                String price = "Price: " + insect.getString("price") + " bells";
-                String times = "Times: " + (insect.getJSONObject("availability").getString("time").equals("") ? "All day" : insect.getJSONObject("availability").getString("time"));
+                String location = insect.getJSONObject("availability").getString("location");
+                String price = insect.getString("price") + " bells";
+                String times = insect.getJSONObject("availability").getString("time");
+                String rarity = insect.getJSONObject("availability").getString("rarity");
+                String monthsNorthern = insect.getJSONObject("availability").getString("month-northern");
+                String monthsSouthern = insect.getJSONObject("availability").getString("month-southern");
+                String catchphrase = insect.getString("catch-phrase");
+                String museumPhrase = insect.getString("museum-phrase");
+                String priceFlick = insect.getString("price-flick");
 
-                insectList.add(new Insect(id, name, location, price, times));
+                insectList.add(new Insect(id, name, location, price, times, rarity, monthsNorthern, monthsSouthern, catchphrase, museumPhrase, priceFlick));
             }
         } catch(IOException | JSONException e) {
             e.printStackTrace();

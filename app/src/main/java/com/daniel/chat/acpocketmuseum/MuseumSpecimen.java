@@ -11,14 +11,24 @@ public class MuseumSpecimen implements Parcelable {
     private String location;
     private String price;
     private String times;
+    private String rarity;
+    private String monthsNorthern;
+    private String monthsSouthern;
+    private String catchphrase;
+    private String museumPhrase;
 
     // Constructor
-    public MuseumSpecimen(int id, String name, String location, String price, String times) {
+    public MuseumSpecimen(int id, String name, String location, String price, String times, String rarity, String monthsNorthern, String monthsSouthern, String catchphrase, String museumPhrase) {
         this.id = id;
         this.name = name;
         this.location = location;
         this.price = price;
         this.times = times;
+        this.rarity = rarity;
+        this.monthsNorthern = monthsNorthern;
+        this.monthsSouthern = monthsSouthern;
+        this.catchphrase = catchphrase;
+        this.museumPhrase = museumPhrase;
     }
 
     // Parcelable stuff; leave as is
@@ -54,12 +64,39 @@ public class MuseumSpecimen implements Parcelable {
         return times;
     }
 
+    public String getRarity() {
+        return rarity;
+    }
+
+    public String getMonthsNorthern() {
+        return monthsNorthern;
+    }
+
+    public String getMonthsSouthern() {
+        return monthsSouthern;
+    }
+
+    public String getCatchphrase() {
+        return catchphrase;
+    }
+
+    public String getMuseumPhrase() {
+        return museumPhrase;
+    }
+
     // Parcelable constructor
     protected MuseumSpecimen(Parcel in) {
         name = in.readString();
         location = in.readString();
         price = in.readString();
         times = in.readString();
+        rarity = in.readString();
+        monthsNorthern = in.readString();
+        monthsSouthern = in.readString();
+        catchphrase = in.readString();
+        museumPhrase = in.readString();
+
+
     }
 
     @Override
@@ -68,6 +105,11 @@ public class MuseumSpecimen implements Parcelable {
         parcel.writeString(location);
         parcel.writeString(price);
         parcel.writeString(times);
+        parcel.writeString(rarity);
+        parcel.writeString(monthsNorthern);
+        parcel.writeString(monthsSouthern);
+        parcel.writeString(catchphrase);
+        parcel.writeString(museumPhrase);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.daniel.chat.acpocketmuseum.Fish;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
@@ -12,7 +13,6 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.daniel.chat.acpocketmuseum.MuseumSpecimen;
 import com.daniel.chat.acpocketmuseum.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -51,12 +51,13 @@ public class FishAdapter extends RecyclerView.Adapter<FishAdapter.ViewHolder> im
         return new ViewHolder(view, itemListener);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.nameTextView.setText(fishList.get(position).getName());
-        holder.locationTextView.setText(fishList.get(position).getLocation());
-        holder.priceTextView.setText(fishList.get(position).getPrice());
-        holder.timesTextView.setText(fishList.get(position).getTimes());
+        holder.locationTextView.setText("Location: " + fishList.get(position).getLocation());
+        holder.priceTextView.setText("Price: " + fishList.get(position).getPrice());
+        holder.timesTextView.setText("Times: " + (fishList.get(position).getTimes().equals("") ? "All day" : fishList.get(position).getTimes()));
 
         loadDataSaveButton(holder);
         loadDataFavoriteButton(holder);
@@ -159,16 +160,6 @@ public class FishAdapter extends RecyclerView.Adapter<FishAdapter.ViewHolder> im
         }
     };
 
-    public void sortListAscending() {
-        Collections.sort(fishList, Fish.MuseumSpecimenSortAscending);
-        notifyDataSetChanged();
-    }
-
-    public void sortListDescending() {
-        Collections.sort(fishList, Fish.MuseumSpecimenSortDescending);
-        notifyDataSetChanged();
-    }
-
     // Method
     public void setOnItemClickListener(OnItemClickListener listener) {
         itemListener = listener;
@@ -190,6 +181,7 @@ public class FishAdapter extends RecyclerView.Adapter<FishAdapter.ViewHolder> im
             timesTextView = itemView.findViewById(R.id.times);
             saveButton = itemView.findViewById(R.id.saveButton);
             favoriteButton = itemView.findViewById(R.id.favoriteButton);
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

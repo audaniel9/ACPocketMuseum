@@ -41,19 +41,40 @@ public class FishDetailsFragment extends Fragment {
 
         assert fish != null;
         String nameLine = fish.getName();
-        String priceLine = fish.getPrice();
-        String locationLine = fish.getLocation();
-        String timesLine = fish.getTimes();
+        String priceLine = "Price: " + fish.getPrice();
+        String locationLine = "Location: " + fish.getLocation();
+        String timesLine = "Times: " + (fish.getTimes().equals("") ? "All day" : fish.getTimes());
+        String rarityLine = "Rarity: " + fish.getRarity();
+        String monthsNorthernLine = "Months(Northern): " + (fish.getMonthsNorthern().equals("") ? "All Year" : fish.getMonthsNorthern());
+        String monthsSouthernLine = "Months(Southern): " + (fish.getMonthsSouthern().equals("") ? "All Year" : fish.getMonthsSouthern());
+        String catchphraseLine = "\"" + fish.getCatchphrase() + "\"";
+        String museumPhraseLine = fish.getMuseumPhrase();
+        String priceCJLine = "Price(CJ): " + fish.getPriceCJ() + " bells";
+        String shadowLine = "Shadow: " + fish.getShadow();
 
         TextView detailsName = rootView.findViewById(R.id.fishDetailsName);
         TextView detailsPrice = rootView.findViewById(R.id.fishDetailsPrice);
         TextView detailsLocation = rootView.findViewById(R.id.fishDetailsLocation);
         TextView detailsTimes = rootView.findViewById(R.id.fishDetailsTimes);
+        TextView detailsRarity = rootView.findViewById(R.id.fishDetailsRarity);
+        TextView detailsMonthsNorthern = rootView.findViewById(R.id.fishDetailsMonthsNorthern);
+        TextView detailsMonthsSouthern = rootView.findViewById(R.id.fishDetailsMonthsSouthern);
+        TextView detailsCatchphrase = rootView.findViewById(R.id.fishDetailsCatchphrase);
+        TextView detailsMuseumPhrase = rootView.findViewById(R.id.fishDetailsMuseumPhrase);
+        TextView detailsPriceCJ = rootView.findViewById(R.id.fishDetailsPriceCJ);
+        TextView detailsShadow = rootView.findViewById(R.id.fishDetailsShadow);
 
         detailsName.setText(nameLine);
         detailsPrice.setText(priceLine);
         detailsLocation.setText(locationLine);
         detailsTimes.setText(timesLine);
+        detailsRarity.setText(rarityLine);
+        detailsMonthsNorthern.setText(monthsNorthernLine);
+        detailsMonthsSouthern.setText(monthsSouthernLine);
+        detailsCatchphrase.setText(catchphraseLine);
+        detailsMuseumPhrase.setText(museumPhraseLine);
+        detailsPriceCJ.setText(priceCJLine);
+        detailsShadow.setText(shadowLine);
 
         return rootView;
     }

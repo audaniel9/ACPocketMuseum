@@ -5,15 +5,27 @@ import android.os.Parcel;
 import com.daniel.chat.acpocketmuseum.MuseumSpecimen;
 
 public class Insect extends MuseumSpecimen {
+    private String priceFlick;
 
     // Constructor
-    public Insect(int id, String name, String location, String price, String times) {
-        super(id, name, location, price, times);
+    public Insect(int id, String name, String location, String price, String times, String rarity, String monthsNorthern, String monthsSouthern, String catchphrase, String museumPhrase, String priceFlick) {
+        super(id, name, location, price, times, rarity, monthsNorthern, monthsSouthern, catchphrase, museumPhrase);
+        this.priceFlick = priceFlick;
+    }
+
+    public String getPriceFlick() {
+        return priceFlick;
     }
 
     // Parcelable constructor
-    public Insect(Parcel in) {
+    protected Insect(Parcel in) {
         super(in);
+        priceFlick = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(priceFlick);
     }
 
     // Parcelable stuff; leave as is

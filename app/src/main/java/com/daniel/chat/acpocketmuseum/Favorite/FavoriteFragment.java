@@ -57,7 +57,6 @@ public class FavoriteFragment extends Fragment {
     public void onCreateOptionsMenu(@NotNull Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.search_menu, menu);
         inflater.inflate(R.menu.sort_menu, menu);
-        inflater.inflate(R.menu.filter_menu, menu);
 
         final SearchView searchView = (SearchView) menu.findItem(R.id.searchMenu).getActionView();
 

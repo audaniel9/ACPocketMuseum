@@ -5,15 +5,36 @@ import android.os.Parcel;
 import com.daniel.chat.acpocketmuseum.MuseumSpecimen;
 
 public class Fish extends MuseumSpecimen {
+    private String priceCJ;
+    private String shadow;
+
 
     // Constructor
-    public Fish(int id, String name, String location, String price, String times) {
-        super(id, name, location, price, times);
+    public Fish(int id, String name, String location, String price, String times, String rarity, String monthsNorthern, String monthsSouthern, String catchphrase, String museumPhrase, String priceCJ, String shadow) {
+        super(id, name, location, price, times, rarity, monthsNorthern, monthsSouthern, catchphrase, museumPhrase);
+        this.priceCJ = priceCJ;
+        this.shadow = shadow;
+    }
+
+    public String getPriceCJ() {
+        return priceCJ;
+    }
+
+    public String getShadow() {
+        return shadow;
     }
 
     // Parcelable constructor
     protected Fish(Parcel in) {
         super(in);
+        priceCJ = in.readString();
+        shadow = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(priceCJ);
+        parcel.writeString(shadow);
     }
 
     // Parcelable stuff; leave as is

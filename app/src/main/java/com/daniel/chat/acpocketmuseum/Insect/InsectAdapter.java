@@ -1,5 +1,6 @@
 package com.daniel.chat.acpocketmuseum.Insect;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
@@ -51,12 +52,13 @@ public class InsectAdapter extends RecyclerView.Adapter<InsectAdapter.ViewHolder
         return new ViewHolder(view, itemListener);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.nameTextView.setText(insectList.get(position).getName());
-        holder.locationTextView.setText(insectList.get(position).getLocation());
-        holder.priceTextView.setText(insectList.get(position).getPrice());
-        holder.timesTextView.setText(insectList.get(position).getTimes());
+        holder.locationTextView.setText("Location: " + insectList.get(position).getLocation());
+        holder.priceTextView.setText("Price: " + insectList.get(position).getPrice());
+        holder.timesTextView.setText("Times: " + insectList.get(position).getTimes());
 
         loadDataSaveButton(holder);
         loadDataFavoriteButton(holder);
