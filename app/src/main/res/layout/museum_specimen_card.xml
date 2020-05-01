@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:foreground="?attr/selectableItemBackground" >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

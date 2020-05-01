@@ -3,19 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="none">
         <item
-            android:id="@+id/museum"
+            android:id="@+id/fish"
             android:icon="@drawable/ic_list"
-            android:title="Museum" />
-    </group>
+            android:title="Fish" />
 
-    <item android:title="Personal" >
-        <menu>
-            <item
-                android:id="@+id/favorites"
-                android:icon="@drawable/ic_favorite"
-                android:title="Favorites"/>
-        </menu>
-    </item>
+        <item
+            android:id="@+id/insect"
+            android:icon="@drawable/ic_list"
+            android:title="Insects"/>
+
+        <item
+            android:id="@+id/favorites"
+            android:icon="@drawable/ic_favorite"
+            android:title="Favorites"/>
+    </group>
 </menu>
