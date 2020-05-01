@@ -4,8 +4,6 @@ import android.os.Parcel;
 
 import com.daniel.chat.acpocketmuseum.MuseumSpecimen;
 
-import java.util.Comparator;
-
 public class Fish extends MuseumSpecimen {
 
     // Constructor
@@ -28,20 +26,6 @@ public class Fish extends MuseumSpecimen {
         @Override
         public Fish[] newArray(int size) {
             return new Fish[size];
-        }
-    };
-
-    public static Comparator<Fish> FishSortAscending = new Comparator<Fish>() {
-        @Override
-        public int compare(Fish fish, Fish fish2) {
-            return fish.getName().compareTo(fish2.getName());
-        }
-    };
-
-    public static Comparator<Fish> FishSortDescending = new Comparator<Fish>() {
-        @Override
-        public int compare(Fish fish, Fish fish2) {
-            return fish2.getName().compareTo(fish.getName());
         }
     };
 }

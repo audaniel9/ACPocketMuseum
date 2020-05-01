@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.daniel.chat.acpocketmuseum.MuseumSpecimen;
 import com.daniel.chat.acpocketmuseum.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -102,6 +103,7 @@ public class FishAdapter extends RecyclerView.Adapter<FishAdapter.ViewHolder> im
         editor.apply();
     }
 
+    // Related to the buttons
     @Override
     public long getItemId(int position) {
         return fishList.get(position).getId();
@@ -135,11 +137,11 @@ public class FishAdapter extends RecyclerView.Adapter<FishAdapter.ViewHolder> im
                 fishListFiltered.addAll(fishListStatic);
             }
             else if(charSequence == "@sortAZ") {
-                Collections.sort(fishListFull, Fish.FishSortAscending);
+                Collections.sort(fishListFull, Fish.MuseumSpecimenSortAscending);
                 fishListFiltered.addAll(fishListFull);
             }
             else if(charSequence == "@sortZA") {
-                Collections.sort(fishListFull, Fish.FishSortDescending);
+                Collections.sort(fishListFull, Fish.MuseumSpecimenSortDescending);
                 fishListFiltered.addAll(fishListFull);
             }
 
@@ -156,6 +158,16 @@ public class FishAdapter extends RecyclerView.Adapter<FishAdapter.ViewHolder> im
             notifyDataSetChanged();
         }
     };
+
+    public void sortListAscending() {
+        Collections.sort(fishList, Fish.MuseumSpecimenSortAscending);
+        notifyDataSetChanged();
+    }
+
+    public void sortListDescending() {
+        Collections.sort(fishList, Fish.MuseumSpecimenSortDescending);
+        notifyDataSetChanged();
+    }
 
     // Method
     public void setOnItemClickListener(OnItemClickListener listener) {

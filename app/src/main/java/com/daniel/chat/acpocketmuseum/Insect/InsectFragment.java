@@ -18,6 +18,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.daniel.chat.acpocketmuseum.MuseumSharedViewModel;
+import com.daniel.chat.acpocketmuseum.MuseumSpecimen;
 import com.daniel.chat.acpocketmuseum.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -26,9 +28,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class InsectFragment extends Fragment {
-    private InsectViewModel insectViewModel;
+    private MuseumSharedViewModel museumSharedViewModel;
     private InsectAdapter adapter;
-    private MenuItem prevMenuItem;  // For toolbar menu use
 
     // Interface to communicate data from main activity -> this fragment
     public static InsectFragment newInstance() {
@@ -40,7 +41,7 @@ public class InsectFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_insect, container, false);
 
-        insectViewModel = new ViewModelProvider(this).get(InsectViewModel.class);   // Assign view model
+        museumSharedViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(MuseumSharedViewModel.class);   // Assign view model
 
         Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle("Insects"); // Set toolbar title
 
@@ -84,35 +85,25 @@ public class InsectFragment extends Fragment {
         switch(item.getItemId()) {
             case R.id.sortByDefault:
                 adapter.getFilter().filter("@sortDefault");
-                toggleCheck(item);
+                item.setChecked(true);
                 return true;
             case R.id.sortByAZ:
                 adapter.getFilter().filter("@sortAZ");
-                toggleCheck(item);
+                item.setChecked(true);
                 return true;
             case R.id.sortByZA:
                 adapter.getFilter().filter("@sortZA");
-                toggleCheck(item);
+                item.setChecked(true);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    // Performs menu check toggling
-    private void toggleCheck(MenuItem item) {
-        item.setChecked(true);
-
-        if (prevMenuItem != null && prevMenuItem != item) {
-            prevMenuItem.setChecked(false);
-        }
-        prevMenuItem = item;
-    }
-
     // Build the recycler view
     private void buildRecyclerView(View rootView) {
         RecyclerView insectRecyclerView = rootView.findViewById(R.id.insectRecyclerView);
-        final List<Insect> insectList = insectViewModel.getInsectList();
+        final List<Insect> insectList = museumSharedViewModel.getInsectList();
 
         insectRecyclerView.setHasFixedSize(true);
         insectRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -139,11 +130,15 @@ public class InsectFragment extends Fragment {
             }
 
             @Override
-            public void onFavoriteButtonClick(long id, ToggleButton favoriteButton) {
+            public void onFavoriteButtonClick(long id, ToggleButton favoriteButton, final int position) {
+                final MuseumSpecimen passFishToFavorite = insectList.get(position);
+
                 if (favoriteButton.isChecked()) {
                     adapter.saveDataFavoriteButton(id, favoriteButton);
+                    museumSharedViewModel.addFavoriteSpecimen(passFishToFavorite);
                 } else {
                     adapter.saveDataFavoriteButton(id, favoriteButton);
+                    museumSharedViewModel.removeFavoriteSpecimen(passFishToFavorite);
                 }
             }
         });

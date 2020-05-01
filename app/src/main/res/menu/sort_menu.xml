@@ -15,15 +15,13 @@
 
                 <item
                     android:id="@+id/sortByDefault"
-                    android:checkable="true"
+                    android:checked="true"
                     android:title="@string/sort_by_Default"/>
                 <item
                     android:id="@+id/sortByAZ"
-                    android:checkable="true"
                     android:title="@string/sort_by_AZ"/>
                 <item
                     android:id="@+id/sortByZA"
-                    android:checkable="true"
                     android:title="@string/sort_by_ZA"/>
             </group>
         </menu>

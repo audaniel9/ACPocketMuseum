@@ -7,7 +7,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
@@ -19,19 +18,18 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.daniel.chat.acpocketmuseum.MuseumSharedViewModel;
 import com.daniel.chat.acpocketmuseum.MuseumSpecimen;
 import com.daniel.chat.acpocketmuseum.R;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class FishFragment extends Fragment {
-    private FishViewModel fishViewModel;
+    private MuseumSharedViewModel museumSharedViewModel;
     private FishAdapter adapter;
-    private MenuItem prevMenuItem;  // For toolbar menu use
 
     // Interface to communicate data from main activity -> this fragment
     public static FishFragment newInstance() {
@@ -43,7 +41,7 @@ public class FishFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_fish, container, false);
 
-        fishViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(FishViewModel.class);   // Assign view model
+        museumSharedViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(MuseumSharedViewModel.class);   // Assign view model
 
         Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle("Fish"); // Set toolbar title
 
@@ -87,35 +85,25 @@ public class FishFragment extends Fragment {
         switch(item.getItemId()) {
             case R.id.sortByDefault:
                 adapter.getFilter().filter("@sortDefault");
-                toggleCheck(item);
+                item.setChecked(true);
                 return true;
             case R.id.sortByAZ:
                 adapter.getFilter().filter("@sortAZ");
-                toggleCheck(item);
+                item.setChecked(true);
                 return true;
             case R.id.sortByZA:
                 adapter.getFilter().filter("@sortZA");
-                toggleCheck(item);
+                item.setChecked(true);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    // Performs menu check toggling
-    private void toggleCheck(MenuItem item) {
-        item.setChecked(true);
-
-        if (prevMenuItem != null && prevMenuItem != item) {
-            prevMenuItem.setChecked(false);
-        }
-        prevMenuItem = item;
-    }
-
     // Build the recycler view
     private void buildRecyclerView(View rootView) {
         RecyclerView fishRecyclerView = rootView.findViewById(R.id.fishRecyclerView);
-        final List<Fish> fishList = fishViewModel.getFishList();
+        final List<Fish> fishList = museumSharedViewModel.getFishList();
 
         fishRecyclerView.setHasFixedSize(true);
         fishRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())); // change this to implement grid view i think?
@@ -144,17 +132,15 @@ public class FishFragment extends Fragment {
 
             @Override
             public void onFavoriteButtonClick(long id, ToggleButton favoriteButton, final int position) {
+                final MuseumSpecimen passFishToFavorite = fishList.get(position);
+
                 if(favoriteButton.isChecked()) {
                     adapter.saveDataFavoriteButton(id, favoriteButton);
-
-                    List<MuseumSpecimen> fishToAdd = new ArrayList<>();
-                    fishToAdd.add(fishList.get(position));  // May only result in fav having 1 thing
-                    fishViewModel.setFavoriteList(fishToAdd);
-                    Toast.makeText(getContext(), "buttonPressed", Toast.LENGTH_SHORT).show();
+                    museumSharedViewModel.addFavoriteSpecimen(passFishToFavorite);
                 }
                 else {
                     adapter.saveDataFavoriteButton(id, favoriteButton);
-                    //fishViewModel.removeFavoriteFish(fishList.get(position));
+                    museumSharedViewModel.removeFavoriteSpecimen(passFishToFavorite);
                 }
             }
         });

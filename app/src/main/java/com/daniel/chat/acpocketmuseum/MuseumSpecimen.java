@@ -3,6 +3,8 @@ package com.daniel.chat.acpocketmuseum;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Comparator;
+
 public class MuseumSpecimen implements Parcelable {
     private int id;
     private String name;
@@ -72,4 +74,18 @@ public class MuseumSpecimen implements Parcelable {
     public int describeContents() {
         return 0;
     }
+
+    public static Comparator<MuseumSpecimen> MuseumSpecimenSortAscending = new Comparator<MuseumSpecimen>() {
+        @Override
+        public int compare(MuseumSpecimen fish, MuseumSpecimen fish2) {
+            return fish.getName().compareTo(fish2.getName());
+        }
+    };
+
+    public static Comparator<MuseumSpecimen> MuseumSpecimenSortDescending = new Comparator<MuseumSpecimen>() {
+        @Override
+        public int compare(MuseumSpecimen fish, MuseumSpecimen fish2) {
+            return fish2.getName().compareTo(fish.getName());
+        }
+    };
 }

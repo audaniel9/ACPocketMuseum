@@ -27,13 +27,14 @@ public class DataRepository {
 
     public DataRepository(Context context) {
         this.context = context;
+        fishList = new ArrayList<>();
+        insectList = new ArrayList<>();
         favoriteList = new MutableLiveData<>();
+        favoriteList.setValue(new ArrayList<MuseumSpecimen>()); // Don't remove this
     }
 
     // Parse and get fish data
-    public List<Fish> getFishList() {
-        fishList = new ArrayList<>();
-
+    public List<Fish> getFishListFromRepo() {
         try {
             JSONArray array = new JSONArray(JSONFileReader("Fish.json"));
 
@@ -56,9 +57,7 @@ public class DataRepository {
     }
 
     // Parse and get insect data
-    public List<Insect> getInsectList() {
-        insectList = new ArrayList<>();
-
+    public List<Insect> getInsectListFromRepo() {
         try {
             JSONArray array = new JSONArray(JSONFileReader("Insect.json"));
 
@@ -81,11 +80,23 @@ public class DataRepository {
     }
 
     public MutableLiveData<List<MuseumSpecimen>> getFavoriteListFromRepo() {
-        Log.d("GetFromRepo", favoriteList.toString());
         return favoriteList;
     }
 
-    public void setFavoriteListFromRepo(List<MuseumSpecimen> list) {
+    public void addFavoriteSpecimenFromRepo(MuseumSpecimen specimen) {
+        List<MuseumSpecimen> list = favoriteList.getValue();
+        assert list != null;
+        if(!list.contains(specimen)) {
+            list.add(specimen);
+        }
+
+        favoriteList.setValue(list);
+    }
+
+    public void removeFavoriteSpecimenFromRepo(MuseumSpecimen specimen) {
+        List<MuseumSpecimen> list = favoriteList.getValue();
+        assert list != null;
+        list.remove(specimen);
         favoriteList.setValue(list);
     }
 

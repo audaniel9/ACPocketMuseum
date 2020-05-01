@@ -34,7 +34,7 @@ public class InsectAdapter extends RecyclerView.Adapter<InsectAdapter.ViewHolder
     public interface OnItemClickListener {
         void onCardItemClick(int position);
         void onSaveButtonClick(long id, ToggleButton saveButton);
-        void onFavoriteButtonClick(long id, ToggleButton favoriteButton);
+        void onFavoriteButtonClick(long id, ToggleButton favoriteButton, int position);
     }
 
     // Adapter constructor
@@ -122,6 +122,17 @@ public class InsectAdapter extends RecyclerView.Adapter<InsectAdapter.ViewHolder
             if(charSequence == null || charSequence.length() == 0) {
                 insectListFiltered.addAll(insectListFull);
             }
+            else if(charSequence == "@sortDefault") {
+                insectListFiltered.addAll(insectListStatic);
+            }
+            else if(charSequence == "@sortAZ") {
+                Collections.sort(insectListFull, Insect.MuseumSpecimenSortAscending);
+                insectListFiltered.addAll(insectListFull);
+            }
+            else if(charSequence == "@sortZA") {
+                Collections.sort(insectListFull, Insect.MuseumSpecimenSortDescending);
+                insectListFiltered.addAll(insectListFull);
+            }
             else {
                 String searchString = charSequence.toString().toLowerCase().trim();
 
@@ -130,18 +141,6 @@ public class InsectAdapter extends RecyclerView.Adapter<InsectAdapter.ViewHolder
                         insectListFiltered.add(insect);
                     }
                 }
-            }
-
-            if(charSequence == "@sortDefault") {
-                insectListFiltered.addAll(insectListStatic);
-            }
-            else if(charSequence == "@sortAZ") {
-                Collections.sort(insectListFull, Insect.InsectSortAscending);
-                insectListFiltered.addAll(insectListFull);
-            }
-            else if(charSequence == "@sortZA") {
-                Collections.sort(insectListFull, Insect.InsectSortDescending);
-                insectListFiltered.addAll(insectListFull);
             }
 
             FilterResults filterResults = new FilterResults();
@@ -210,7 +209,7 @@ public class InsectAdapter extends RecyclerView.Adapter<InsectAdapter.ViewHolder
                         long id = getItemId();
                         int position = getAdapterPosition();
                         if(position != RecyclerView.NO_POSITION) {
-                            listener.onFavoriteButtonClick(id, favoriteButton);
+                            listener.onFavoriteButtonClick(id, favoriteButton, position);
                         }
                     }
                 }
