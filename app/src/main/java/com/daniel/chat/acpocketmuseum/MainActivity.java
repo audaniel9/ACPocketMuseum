@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.daniel.chat.acpocketmuseum.Favorite.FavoriteFragment;
 import com.daniel.chat.acpocketmuseum.Fish.FishFragment;
+import com.daniel.chat.acpocketmuseum.Fossil.FossilFragment;
 import com.daniel.chat.acpocketmuseum.Insect.InsectFragment;
 import com.google.android.material.navigation.NavigationView;
 
@@ -98,6 +99,14 @@ public class MainActivity extends AppCompatActivity {
                             getSupportFragmentManager().beginTransaction()
                                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                     .replace(R.id.fragment_container, InsectFragment.newInstance())
+                                    .addToBackStack(null).commit();
+                        }
+                        break;
+                    case R.id.fossil:
+                        if(!currentFragment.equals("FossilFragment")) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                    .replace(R.id.fragment_container, FossilFragment.newInstance())
                                     .addToBackStack(null).commit();
                         }
                         break;

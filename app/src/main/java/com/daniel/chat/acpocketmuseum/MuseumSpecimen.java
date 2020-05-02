@@ -31,18 +31,14 @@ public class MuseumSpecimen implements Parcelable {
         this.museumPhrase = museumPhrase;
     }
 
-    // Parcelable stuff; leave as is
-    public static final Creator<MuseumSpecimen> CREATOR = new Creator<MuseumSpecimen>() {
-        @Override
-        public MuseumSpecimen createFromParcel(Parcel in) {
-            return new MuseumSpecimen(in);
-        }
+    // Constructor for fossils
+    public MuseumSpecimen(int id, String name, String price, String museumPhrase) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.museumPhrase = museumPhrase;
 
-        @Override
-        public MuseumSpecimen[] newArray(int size) {
-            return new MuseumSpecimen[size];
-        }
-    };
+    }
 
     public int getId() {
         return id;
@@ -95,8 +91,6 @@ public class MuseumSpecimen implements Parcelable {
         monthsSouthern = in.readString();
         catchphrase = in.readString();
         museumPhrase = in.readString();
-
-
     }
 
     @Override
@@ -111,6 +105,19 @@ public class MuseumSpecimen implements Parcelable {
         parcel.writeString(catchphrase);
         parcel.writeString(museumPhrase);
     }
+
+    // Parcelable stuff; leave as is
+    public static final Creator<MuseumSpecimen> CREATOR = new Creator<MuseumSpecimen>() {
+        @Override
+        public MuseumSpecimen createFromParcel(Parcel in) {
+            return new MuseumSpecimen(in);
+        }
+
+        @Override
+        public MuseumSpecimen[] newArray(int size) {
+            return new MuseumSpecimen[size];
+        }
+    };
 
     @Override
     public int describeContents() {

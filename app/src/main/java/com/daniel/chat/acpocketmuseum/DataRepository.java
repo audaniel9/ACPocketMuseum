@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.daniel.chat.acpocketmuseum.Fish.Fish;
+import com.daniel.chat.acpocketmuseum.Fossil.Fossil;
 import com.daniel.chat.acpocketmuseum.Insect.Insect;
 
 import org.json.JSONArray;
@@ -23,12 +24,14 @@ public class DataRepository {
     private Context context;
     private List<Fish> fishList;
     private List<Insect> insectList;
+    private List<Fossil> fossilList;
     private MutableLiveData<List<MuseumSpecimen>> favoriteList;
 
     public DataRepository(Context context) {
         this.context = context;
         fishList = new ArrayList<>();
         insectList = new ArrayList<>();
+        fossilList = new ArrayList<>();
         favoriteList = new MutableLiveData<>();
         favoriteList.setValue(new ArrayList<MuseumSpecimen>()); // Don't remove this
     }
@@ -90,6 +93,28 @@ public class DataRepository {
         }
 
         return insectList;
+    }
+
+    // Parse and get fossil data
+    public List<Fossil> getFossilListFromRepo() {
+        try {
+            JSONArray array = new JSONArray(JSONFileReader("Fossil.json"));
+
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject fossil = array.getJSONObject(i);
+
+                int id = fossil.getInt("id");
+                String name = fossil.getJSONObject("name").getString("name-en");
+                String price = fossil.getString("price");
+                String museumPhrase = fossil.getString("museum-phrase");
+
+                fossilList.add(new Fossil(id, name, price, museumPhrase));
+            }
+        } catch(IOException | JSONException e) {
+            e.printStackTrace();
+        }
+
+        return fossilList;
     }
 
     public MutableLiveData<List<MuseumSpecimen>> getFavoriteListFromRepo() {

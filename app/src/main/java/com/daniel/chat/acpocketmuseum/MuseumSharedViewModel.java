@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.daniel.chat.acpocketmuseum.Fish.Fish;
+import com.daniel.chat.acpocketmuseum.Fossil.Fossil;
 import com.daniel.chat.acpocketmuseum.Insect.Insect;
 
 import java.util.List;
@@ -25,6 +26,10 @@ public class MuseumSharedViewModel extends AndroidViewModel {
 
     public List<Insect> getInsectList() {
         return repository.getInsectListFromRepo();
+    }
+
+    public List<Fossil> getFossilList() {
+        return repository.getFossilListFromRepo();
     }
 
     public LiveData<List<MuseumSpecimen>> getFavoriteList() {
