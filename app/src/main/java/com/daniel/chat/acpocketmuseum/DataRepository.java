@@ -25,15 +25,12 @@ public class DataRepository {
     private List<Fish> fishList;
     private List<Insect> insectList;
     private List<Fossil> fossilList;
-    private MutableLiveData<List<MuseumSpecimen>> favoriteList;
 
     public DataRepository(Context context) {
         this.context = context;
         fishList = new ArrayList<>();
         insectList = new ArrayList<>();
         fossilList = new ArrayList<>();
-        favoriteList = new MutableLiveData<>();
-        favoriteList.setValue(new ArrayList<MuseumSpecimen>()); // Don't remove this
     }
 
     // Parse and get fish data
@@ -115,27 +112,6 @@ public class DataRepository {
         }
 
         return fossilList;
-    }
-
-    public MutableLiveData<List<MuseumSpecimen>> getFavoriteListFromRepo() {
-        return favoriteList;
-    }
-
-    public void addFavoriteSpecimenFromRepo(MuseumSpecimen specimen) {
-        List<MuseumSpecimen> list = favoriteList.getValue();
-        assert list != null;
-        if(!list.contains(specimen)) {
-            list.add(specimen);
-        }
-
-        favoriteList.setValue(list);
-    }
-
-    public void removeFavoriteSpecimenFromRepo(MuseumSpecimen specimen) {
-        List<MuseumSpecimen> list = favoriteList.getValue();
-        assert list != null;
-        list.remove(specimen);
-        favoriteList.setValue(list);
     }
 
     // Reads JSON file
