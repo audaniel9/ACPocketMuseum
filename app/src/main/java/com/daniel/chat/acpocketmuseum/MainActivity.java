@@ -26,6 +26,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private DrawerLayout drawer;
+    private FishFragment fishFragment;
+    private InsectFragment insectFragment;
+    private FossilFragment fossilFragment;
+    private FavoriteFragment favoriteFragment;
     private String currentFragment; // For fragment stack use
 
     @Override
@@ -34,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         buildToolbar();
+        instantiateFragments();
         buildDrawer();
-        fragmentStackListener();
     }
 
     // Toolbar menu logic
@@ -79,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set museum fragment to start when activity starts
         getSupportFragmentManager().beginTransaction().replace(
-                R.id.fragment_container, FishFragment.newInstance())
+                R.id.fragment_container, fishFragment)
                 .addToBackStack(null).commit();
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -90,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                         if(!currentFragment.equals("FishFragment")) {
                             getSupportFragmentManager().beginTransaction()
                                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                                    .replace(R.id.fragment_container, FishFragment.newInstance())
+                                    .replace(R.id.fragment_container, fishFragment)
                                     .addToBackStack(null).commit();
                         }
                         break;
@@ -98,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                         if(!currentFragment.equals("InsectFragment")) {
                             getSupportFragmentManager().beginTransaction()
                                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                                    .replace(R.id.fragment_container, InsectFragment.newInstance())
+                                    .replace(R.id.fragment_container, insectFragment)
                                     .addToBackStack(null).commit();
                         }
                         break;
@@ -106,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                         if(!currentFragment.equals("FossilFragment")) {
                             getSupportFragmentManager().beginTransaction()
                                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                                    .replace(R.id.fragment_container, FossilFragment.newInstance())
+                                    .replace(R.id.fragment_container, fossilFragment)
                                     .addToBackStack(null).commit();
                         }
                         break;
@@ -114,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                         if(!currentFragment.equals("FavoriteFragment")) {
                             getSupportFragmentManager().beginTransaction()
                                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                                    .replace(R.id.fragment_container, FavoriteFragment.newInstance())
+                                    .replace(R.id.fragment_container, favoriteFragment)
                                     .addToBackStack(null).commit();
                         }
                         break;
@@ -127,7 +131,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Listens for change in fragment stack; used for destroying activity on back press while on first fragment
-    public void fragmentStackListener() {
+    public void instantiateFragments() {
+        fishFragment = FishFragment.newInstance();
+        insectFragment = InsectFragment.newInstance();
+        fossilFragment = FossilFragment.newInstance();
+        favoriteFragment = FavoriteFragment.newInstance();
+
         getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
