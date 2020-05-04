@@ -39,9 +39,9 @@ public class FishFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_fish, container, false);
 
-        museumSharedViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(MuseumSharedViewModel.class);   // Assign view model
+        museumSharedViewModel = new ViewModelProvider(requireActivity()).get(MuseumSharedViewModel.class);   // Assign view model
 
-        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle("Fish"); // Set toolbar title
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle("Fish"); // Set toolbar title
 
         setHasOptionsMenu(true);    // Set toolbar menus
 

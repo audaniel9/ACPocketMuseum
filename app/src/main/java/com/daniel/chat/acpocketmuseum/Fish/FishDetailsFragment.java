@@ -35,7 +35,7 @@ public class FishDetailsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_fish_details, container, false);
 
         // Set toolbar title
-        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle("Details");
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle("Details");
         setHasOptionsMenu(true);
 
         assert getArguments() != null;
