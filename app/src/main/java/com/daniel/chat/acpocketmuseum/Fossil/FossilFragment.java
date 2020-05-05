@@ -1,17 +1,6 @@
 package com.daniel.chat.acpocketmuseum.Fossil;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,21 +8,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ToggleButton;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.daniel.chat.acpocketmuseum.MuseumSharedViewModel;
 import com.daniel.chat.acpocketmuseum.MuseumSpecimen;
 import com.daniel.chat.acpocketmuseum.R;
 
 import java.util.List;
-import java.util.Objects;
 
 public class FossilFragment extends Fragment {
     private MuseumSharedViewModel museumSharedViewModel;
     private FossilAdapter adapter;
-
-    // Interface to communicate data from main activity -> this fragment
-    public static FossilFragment newInstance() {
-        return new FossilFragment();
-    }
 
     @Nullable
     @Override
@@ -41,8 +34,6 @@ public class FossilFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_fossil, container, false);
 
         museumSharedViewModel = new ViewModelProvider(requireActivity()).get(MuseumSharedViewModel.class);  // Assign view model
-
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle("Fossils"); // Set toolbar title
 
         setHasOptionsMenu(true);    // Set toolbar menus
 
@@ -96,7 +87,7 @@ public class FossilFragment extends Fragment {
     }
 
     // Build the recycler view
-    private void buildRecyclerView(View rootView) {
+    private void buildRecyclerView(final View rootView) {
         RecyclerView fossilRecyclerView = rootView.findViewById(R.id.fossilRecyclerView);
         final List<Fossil> fossilList = museumSharedViewModel.getFossilList();
 
@@ -109,10 +100,9 @@ public class FossilFragment extends Fragment {
         adapter.setOnItemClickListener(new FossilAdapter.OnItemClickListener() {
             @Override
             public void onCardItemClick(int position) {
-                getParentFragmentManager().beginTransaction()
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .replace(R.id.fragment_container, FossilDetailsFragment.newInstance(fossilList.get(position)))
-                        .addToBackStack(null).commit();
+                NavDirections action =
+                        FossilFragmentDirections.actionFossilFragmentToFossilDetailsFragment(fossilList.get(position));
+                Navigation.findNavController(rootView).navigate(action);
             }
 
             @Override

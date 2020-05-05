@@ -10,11 +10,11 @@ import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,16 +23,10 @@ import com.daniel.chat.acpocketmuseum.MuseumSpecimen;
 import com.daniel.chat.acpocketmuseum.R;
 
 import java.util.List;
-import java.util.Objects;
 
 public class InsectFragment extends Fragment {
     private MuseumSharedViewModel museumSharedViewModel;
     private InsectAdapter adapter;
-
-    // Interface to communicate data from main activity -> this fragment
-    public static InsectFragment newInstance() {
-        return new InsectFragment();
-    }
 
     @Nullable
     @Override
@@ -40,8 +34,6 @@ public class InsectFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_insect, container, false);
 
         museumSharedViewModel = new ViewModelProvider(requireActivity()).get(MuseumSharedViewModel.class);   // Assign view model
-
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle("Insects"); // Set toolbar title
 
         setHasOptionsMenu(true);    // Set toolbar menus
 
@@ -95,7 +87,7 @@ public class InsectFragment extends Fragment {
     }
 
     // Build the recycler view
-    private void buildRecyclerView(View rootView) {
+    private void buildRecyclerView(final View rootView) {
         RecyclerView insectRecyclerView = rootView.findViewById(R.id.insectRecyclerView);
         final List<Insect> insectList = museumSharedViewModel.getInsectList();
 
@@ -108,10 +100,9 @@ public class InsectFragment extends Fragment {
         adapter.setOnItemClickListener(new InsectAdapter.OnItemClickListener() {
             @Override
             public void onCardItemClick(int position) {
-                getParentFragmentManager().beginTransaction()
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .replace(R.id.fragment_container, InsectDetailsFragment.newInstance(insectList.get(position)))
-                        .addToBackStack(null).commit();
+                NavDirections action =
+                        InsectFragmentDirections.actionInsectFragmentToInsectDetailsFragment(insectList.get(position));
+                Navigation.findNavController(rootView).navigate(action);
             }
 
             @Override

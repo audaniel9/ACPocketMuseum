@@ -8,35 +8,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.daniel.chat.acpocketmuseum.R;
 
-import java.util.Objects;
-
 public class FossilDetailsFragment extends Fragment {
     private static final String FOSSIL = "fossil";
 
-    // Interface to communicate data from parent fragment -> this fragment
-    public static FossilDetailsFragment newInstance(Fossil fossil) {
-        FossilDetailsFragment fragment = new FossilDetailsFragment();
-        Bundle args = new Bundle();
-
-        args.putParcelable(FOSSIL, fossil);
-        fragment.setArguments(args);
-
-        return fragment;
-    }
-
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
        View rootView = inflater.inflate(R.layout.fragment_fossil_details, container, false);
 
-        // Set toolbar title
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle("Details");
        setHasOptionsMenu(true);
 
         assert getArguments() != null;

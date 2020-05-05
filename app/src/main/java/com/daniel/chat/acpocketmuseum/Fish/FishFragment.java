@@ -10,11 +10,11 @@ import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,16 +23,10 @@ import com.daniel.chat.acpocketmuseum.MuseumSpecimen;
 import com.daniel.chat.acpocketmuseum.R;
 
 import java.util.List;
-import java.util.Objects;
 
 public class FishFragment extends Fragment {
     private MuseumSharedViewModel museumSharedViewModel;
     private FishAdapter adapter;
-
-    // Interface to communicate data from main activity -> this fragment
-    public static FishFragment newInstance() {
-        return new FishFragment();
-    }
 
     @Nullable
     @Override
@@ -40,8 +34,6 @@ public class FishFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_fish, container, false);
 
         museumSharedViewModel = new ViewModelProvider(requireActivity()).get(MuseumSharedViewModel.class);   // Assign view model
-
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle("Fish"); // Set toolbar title
 
         setHasOptionsMenu(true);    // Set toolbar menus
 
@@ -95,7 +87,7 @@ public class FishFragment extends Fragment {
     }
 
     // Build the recycler view
-    private void buildRecyclerView(View rootView) {
+    private void buildRecyclerView(final View rootView) {
         RecyclerView fishRecyclerView = rootView.findViewById(R.id.fishRecyclerView);
         final List<Fish> fishList = museumSharedViewModel.getFishList();
 
@@ -108,10 +100,9 @@ public class FishFragment extends Fragment {
         adapter.setOnItemClickListener(new FishAdapter.OnItemClickListener() {
             @Override
             public void onCardItemClick(int position) {
-                getParentFragmentManager().beginTransaction()
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .replace(R.id.fragment_container, FishDetailsFragment.newInstance(fishList.get(position)))
-                        .addToBackStack(null).commit();
+                NavDirections action =
+                        FishFragmentDirections.actionFishFragmentToFishDetailsFragment(fishList.get(position));
+                Navigation.findNavController(rootView).navigate(action);
             }
 
             @Override

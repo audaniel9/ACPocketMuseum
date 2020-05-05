@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fish">
+
+    <fragment
+        android:id="@id/fish"
+        android:name="com.daniel.chat.acpocketmuseum.Fish.FishFragment"
+        android:label="Fish"
+        tools:layout="@layout/fragment_fish">
+        <action
+            android:id="@+id/action_fishFragment_to_fishDetailsFragment"
+            app:destination="@id/fishDetailsFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+    </fragment>
+    <fragment
+        android:id="@+id/fishDetailsFragment"
+        android:name="com.daniel.chat.acpocketmuseum.Fish.FishDetailsFragment"
+        android:label="Details"
+        tools:layout="@layout/fragment_fish_details">
+        <argument
+            android:name="fish"
+            app:argType="com.daniel.chat.acpocketmuseum.Fish.Fish" />
+    </fragment>
+    <fragment
+        android:id="@id/insect"
+        android:name="com.daniel.chat.acpocketmuseum.Insect.InsectFragment"
+        android:label="Insect"
+        tools:layout="@layout/fragment_insect">
+        <action
+            android:id="@+id/action_insectFragment_to_insectDetailsFragment"
+            app:destination="@id/insectDetailsFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+    </fragment>
+    <fragment
+        android:id="@+id/insectDetailsFragment"
+        android:name="com.daniel.chat.acpocketmuseum.Insect.InsectDetailsFragment"
+        android:label="Details"
+        tools:layout="@layout/fragment_insect_details">
+        <argument
+            android:name="insect"
+            app:argType="com.daniel.chat.acpocketmuseum.Insect.Insect" />
+    </fragment>
+    <fragment
+        android:id="@id/fossil"
+        android:name="com.daniel.chat.acpocketmuseum.Fossil.FossilFragment"
+        android:label="Fossil"
+        tools:layout="@layout/fragment_fossil">
+        <action
+            android:id="@+id/action_fossilFragment_to_fossilDetailsFragment"
+            app:destination="@id/fossilDetailsFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+    </fragment>
+    <fragment
+        android:id="@+id/fossilDetailsFragment"
+        android:name="com.daniel.chat.acpocketmuseum.Fossil.FossilDetailsFragment"
+        android:label="Details"
+        tools:layout="@layout/fragment_fossil_details">
+        <argument
+            android:name="fossil"
+            app:argType="com.daniel.chat.acpocketmuseum.Fossil.Fossil" />
+    </fragment>
+    <fragment
+        android:id="@id/favorites"
+        android:name="com.daniel.chat.acpocketmuseum.Favorite.FavoriteFragment"
+        android:label="Favorites"
+        tools:layout="@layout/fragment_favorite" />
+</navigation>
