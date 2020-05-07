@@ -28,7 +28,6 @@ public class InsectFragment extends Fragment {
     private MuseumSharedViewModel museumSharedViewModel;
     private InsectAdapter adapter;
 
-    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_insect, container, false);

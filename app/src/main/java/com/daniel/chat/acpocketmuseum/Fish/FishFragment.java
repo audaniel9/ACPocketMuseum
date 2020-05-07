@@ -28,7 +28,6 @@ public class FishFragment extends Fragment {
     private MuseumSharedViewModel museumSharedViewModel;
     private FishAdapter adapter;
 
-    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_fish, container, false);

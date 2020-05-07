@@ -28,17 +28,11 @@ public class FavoriteFragment extends Fragment {
     private MuseumSharedViewModel museumSharedViewModel;
     private FavoriteAdapter adapter;
 
-    public static FavoriteFragment newInstance() {
-        return new FavoriteFragment();
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_favorite, container, false);
 
         museumSharedViewModel = new ViewModelProvider(requireActivity()).get(MuseumSharedViewModel.class);  // Assign view model
-
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle("Favorites");    // Set toolbar title
 
         setHasOptionsMenu(true);    // Set toolbar menus
 
