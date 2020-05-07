@@ -75,5 +75,15 @@
         android:id="@id/favorites"
         android:name="com.daniel.chat.acpocketmuseum.Favorite.FavoriteFragment"
         android:label="Favorites"
-        tools:layout="@layout/fragment_favorite" />
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/action_favorites_to_fishDetailsFragment"
+            app:destination="@id/fishDetailsFragment" />
+        <action
+            android:id="@+id/action_favorites_to_insectDetailsFragment"
+            app:destination="@id/insectDetailsFragment" />
+        <action
+            android:id="@+id/action_favorites_to_fossilDetailsFragment"
+            app:destination="@id/fossilDetailsFragment" />
+    </fragment>
 </navigation>

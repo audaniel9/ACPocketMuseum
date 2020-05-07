@@ -8,4 +8,9 @@ public class Fossil extends MuseumSpecimen {
     public Fossil(int id, String name, String price, String museumPhrase) {
         super(id, name, price, museumPhrase);
     }
+
+    @Override
+    public String getType() {
+        return "Fossil";
+    }
 }

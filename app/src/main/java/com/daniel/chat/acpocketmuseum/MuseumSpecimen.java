@@ -16,9 +16,11 @@ public class MuseumSpecimen implements Parcelable {
     private String monthsSouthern;
     private String catchphrase;
     private String museumPhrase;
+    private String type;
 
     // Constructor
-    public MuseumSpecimen(int id, String name, String location, String price, String times, String rarity, String monthsNorthern, String monthsSouthern, String catchphrase, String museumPhrase) {
+    public MuseumSpecimen(int id, String name, String location, String price, String times, String rarity,
+                          String monthsNorthern, String monthsSouthern, String catchphrase, String museumPhrase) {
         this.id = id;
         this.name = name;
         this.location = location;
@@ -37,7 +39,6 @@ public class MuseumSpecimen implements Parcelable {
         this.name = name;
         this.price = price;
         this.museumPhrase = museumPhrase;
-
     }
 
     public int getId() {
@@ -78,6 +79,10 @@ public class MuseumSpecimen implements Parcelable {
 
     public String getMuseumPhrase() {
         return museumPhrase;
+    }
+
+    public String getType() {
+        return type;
     }
 
     // Parcelable constructor

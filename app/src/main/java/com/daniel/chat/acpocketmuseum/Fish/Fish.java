@@ -10,7 +10,8 @@ public class Fish extends MuseumSpecimen {
 
 
     // Constructor
-    public Fish(int id, String name, String location, String price, String times, String rarity, String monthsNorthern, String monthsSouthern, String catchphrase, String museumPhrase, String priceCJ, String shadow) {
+    public Fish(int id, String name, String location, String price, String times, String rarity,
+                String monthsNorthern, String monthsSouthern, String catchphrase, String museumPhrase, String priceCJ, String shadow) {
         super(id, name, location, price, times, rarity, monthsNorthern, monthsSouthern, catchphrase, museumPhrase);
         this.priceCJ = priceCJ;
         this.shadow = shadow;
@@ -22,6 +23,11 @@ public class Fish extends MuseumSpecimen {
 
     public String getShadow() {
         return shadow;
+    }
+
+    @Override
+    public String getType() {
+        return "Fish";
     }
 
     // Parcelable constructor

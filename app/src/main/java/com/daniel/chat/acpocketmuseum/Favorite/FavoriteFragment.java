@@ -14,9 +14,14 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.daniel.chat.acpocketmuseum.Fish.Fish;
+import com.daniel.chat.acpocketmuseum.Fossil.Fossil;
+import com.daniel.chat.acpocketmuseum.Insect.Insect;
 import com.daniel.chat.acpocketmuseum.MuseumSharedViewModel;
 import com.daniel.chat.acpocketmuseum.MuseumSpecimen;
 import com.daniel.chat.acpocketmuseum.R;
@@ -86,14 +91,39 @@ public class FavoriteFragment extends Fragment {
     }
 
     // Build the recycler view
-    private void buildRecyclerView(View rootView) {
+    private void buildRecyclerView(final View rootView) {
         RecyclerView favoriteRecyclerView = rootView.findViewById(R.id.favoriteRecyclerView);
+        final List<MuseumSpecimen> favoriteList = museumSharedViewModel.getFavoriteList().getValue();
 
         favoriteRecyclerView.setHasFixedSize(true);
         favoriteRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())); // change this to implement grid view i think?
 
         adapter = new FavoriteAdapter();
         adapter.setHasStableIds(true);
+
+        adapter.setOnItemClickListener(new FavoriteAdapter.OnItemClickListener() {
+            @Override
+            public void onCardItemClick(int position) {
+                assert favoriteList != null;
+                switch(favoriteList.get(position).getType()) {
+                    case "Fish":
+                        NavDirections fishAction =
+                                FavoriteFragmentDirections.actionFavoritesToFishDetailsFragment((Fish) favoriteList.get(position));
+                        Navigation.findNavController(rootView).navigate(fishAction);
+                        break;
+                    case "Insect":
+                        NavDirections insectAction =
+                                FavoriteFragmentDirections.actionFavoritesToInsectDetailsFragment((Insect) favoriteList.get(position));
+                        Navigation.findNavController(rootView).navigate(insectAction);
+                        break;
+                    case "Fossil":
+                        NavDirections fossilAction =
+                                FavoriteFragmentDirections.actionFavoritesToFossilDetailsFragment((Fossil) favoriteList.get(position));
+                        Navigation.findNavController(rootView).navigate(fossilAction);
+                        break;
+                }
+            }
+        });
 
         favoriteRecyclerView.setAdapter(adapter);
 

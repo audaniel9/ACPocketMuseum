@@ -21,6 +21,12 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
     private List<MuseumSpecimen> favoriteList;
     private List<MuseumSpecimen> favoriteListFull;
     private List<MuseumSpecimen> favoriteListStatic;
+    private OnItemClickListener itemListener;
+
+    // Click listener interface
+    public interface OnItemClickListener {
+        void onCardItemClick(int position);
+    }
 
     // This method will act as a pseudo constructor; sets data from observer
     public void setFavoriteListInAdapter(List<MuseumSpecimen> favoriteList) {
@@ -34,12 +40,13 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.favorites_card, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, itemListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.nameTextView.setText(favoriteList.get(position).getName());
+        holder.typeTextView.setText(favoriteList.get(position).getType());
     }
 
     @Override
@@ -96,12 +103,29 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
         }
     };
 
+    // Method
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        itemListener = listener;
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView nameTextView;
+        public TextView typeTextView;
 
-        public ViewHolder(final View itemView) {
+        public ViewHolder(final View itemView, final OnItemClickListener listener) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.favoriteName);
+            typeTextView = itemView.findViewById(R.id.favoriteType);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if(position != RecyclerView.NO_POSITION) {
+                        listener.onCardItemClick(position);
+                    }
+                }
+            });
         }
     }
 }

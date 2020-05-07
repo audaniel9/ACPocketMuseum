@@ -8,13 +8,19 @@ public class Insect extends MuseumSpecimen {
     private String priceFlick;
 
     // Constructor
-    public Insect(int id, String name, String location, String price, String times, String rarity, String monthsNorthern, String monthsSouthern, String catchphrase, String museumPhrase, String priceFlick) {
+    public Insect(int id, String name, String location, String price, String times, String rarity,
+                  String monthsNorthern, String monthsSouthern, String catchphrase, String museumPhrase, String priceFlick) {
         super(id, name, location, price, times, rarity, monthsNorthern, monthsSouthern, catchphrase, museumPhrase);
         this.priceFlick = priceFlick;
     }
 
     public String getPriceFlick() {
         return priceFlick;
+    }
+
+    @Override
+    public String getType() {
+        return "Insect";
     }
 
     // Parcelable constructor
