@@ -1,10 +1,6 @@
 package com.daniel.chat.acpocketmuseum;
 
 import android.content.Context;
-import android.util.Log;
-
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.daniel.chat.acpocketmuseum.Fish.Fish;
 import com.daniel.chat.acpocketmuseum.Fossil.Fossil;
@@ -44,7 +40,7 @@ public class DataRepository {
                 int id = fish.getInt("id");
                 String name = fish.getJSONObject("name").getString("name-en");
                 String location = fish.getJSONObject("availability").getString("location");
-                String price = fish.getString("price") + " bells";
+                String price = fish.getInt("price") + " bells";
                 String times = fish.getJSONObject("availability").getString("time");
                 String rarity = fish.getJSONObject("availability").getString("rarity");
                 String monthsNorthern = fish.getJSONObject("availability").getString("month-northern");

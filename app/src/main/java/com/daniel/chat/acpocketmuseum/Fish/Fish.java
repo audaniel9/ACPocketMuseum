@@ -3,8 +3,10 @@ package com.daniel.chat.acpocketmuseum.Fish;
 import android.os.Parcel;
 
 import com.daniel.chat.acpocketmuseum.MuseumSpecimen;
+import com.google.gson.annotations.SerializedName;
 
 public class Fish extends MuseumSpecimen {
+    @SerializedName("price-cj")
     private String priceCJ;
     private String shadow;
 

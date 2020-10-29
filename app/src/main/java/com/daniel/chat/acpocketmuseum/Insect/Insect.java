@@ -3,8 +3,10 @@ package com.daniel.chat.acpocketmuseum.Insect;
 import android.os.Parcel;
 
 import com.daniel.chat.acpocketmuseum.MuseumSpecimen;
+import com.google.gson.annotations.SerializedName;
 
 public class Insect extends MuseumSpecimen {
+    @SerializedName("price-flick")
     private String priceFlick;
 
     // Constructor

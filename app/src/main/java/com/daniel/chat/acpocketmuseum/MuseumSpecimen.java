@@ -3,32 +3,49 @@ package com.daniel.chat.acpocketmuseum;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Comparator;
 
 public class MuseumSpecimen implements Parcelable {
     private int id;
-    private String name;
-    private String location;
+    private Name name;
+    private Availability availability;
     private String price;
-    private String times;
-    private String rarity;
-    private String monthsNorthern;
-    private String monthsSouthern;
+    @SerializedName("catch-phrase")
     private String catchphrase;
+    @SerializedName("museum-phrase")
     private String museumPhrase;
     private String type;
+
+    public static class Name {
+        @SerializedName("name-USen")
+        public String nameUSen;
+    }
+
+    public static class Availability {
+        @SerializedName("month-northern")
+        public String monthsNorthern;
+        @SerializedName("month-southern")
+        public String monthsSouthern;
+        public String time;
+        public String location;
+        public String rarity;
+    }
 
     // Constructor
     public MuseumSpecimen(int id, String name, String location, String price, String times, String rarity,
                           String monthsNorthern, String monthsSouthern, String catchphrase, String museumPhrase) {
         this.id = id;
-        this.name = name;
-        this.location = location;
+        this.name = new Name();
+        this.name.nameUSen = name;
+        this.availability = new Availability();
+        this.availability.location = location;
         this.price = price;
-        this.times = times;
-        this.rarity = rarity;
-        this.monthsNorthern = monthsNorthern;
-        this.monthsSouthern = monthsSouthern;
+        this.availability.time = times;
+        this.availability.rarity = rarity;
+        this.availability.monthsNorthern = monthsNorthern;
+        this.availability.monthsSouthern = monthsSouthern;
         this.catchphrase = catchphrase;
         this.museumPhrase = museumPhrase;
     }
@@ -36,7 +53,8 @@ public class MuseumSpecimen implements Parcelable {
     // Constructor for fossils
     public MuseumSpecimen(int id, String name, String price, String museumPhrase) {
         this.id = id;
-        this.name = name;
+        this.name = new Name();
+        this.name.nameUSen = name;
         this.price = price;
         this.museumPhrase = museumPhrase;
     }
@@ -46,11 +64,11 @@ public class MuseumSpecimen implements Parcelable {
     }
 
     public String getName() {
-        return name;
+        return name.nameUSen;
     }
 
     public String getLocation() {
-        return location;
+        return availability.location;
     }
 
     public String getPrice() {
@@ -58,19 +76,19 @@ public class MuseumSpecimen implements Parcelable {
     }
 
     public String getTimes() {
-        return times;
+        return availability.time;
     }
 
     public String getRarity() {
-        return rarity;
+        return availability.rarity;
     }
 
     public String getMonthsNorthern() {
-        return monthsNorthern;
+        return availability.monthsNorthern;
     }
 
     public String getMonthsSouthern() {
-        return monthsSouthern;
+        return availability.monthsSouthern;
     }
 
     public String getCatchphrase() {
@@ -87,26 +105,26 @@ public class MuseumSpecimen implements Parcelable {
 
     // Parcelable constructor
     protected MuseumSpecimen(Parcel in) {
-        name = in.readString();
-        location = in.readString();
+        name.nameUSen = in.readString();
+        availability.location = in.readString();
         price = in.readString();
-        times = in.readString();
-        rarity = in.readString();
-        monthsNorthern = in.readString();
-        monthsSouthern = in.readString();
+        availability.time = in.readString();
+        availability.rarity = in.readString();
+        availability.monthsNorthern = in.readString();
+        availability.monthsSouthern = in.readString();
         catchphrase = in.readString();
         museumPhrase = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(name);
-        parcel.writeString(location);
+        parcel.writeString(name.nameUSen);
+        parcel.writeString(availability.location);
         parcel.writeString(price);
-        parcel.writeString(times);
-        parcel.writeString(rarity);
-        parcel.writeString(monthsNorthern);
-        parcel.writeString(monthsSouthern);
+        parcel.writeString(availability.time);
+        parcel.writeString(availability.rarity);
+        parcel.writeString(availability.monthsNorthern);
+        parcel.writeString(availability.monthsSouthern);
         parcel.writeString(catchphrase);
         parcel.writeString(museumPhrase);
     }
