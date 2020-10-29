@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/fish">
+    app:startDestination="@id/home">
 
     <fragment
         android:id="@id/fish"
@@ -85,5 +85,20 @@
         <action
             android:id="@+id/action_favorites_to_fossilDetailsFragment"
             app:destination="@id/fossilDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/home"
+        android:name="com.daniel.chat.acpocketmuseum.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_home_to_fishFragment"
+            app:destination="@id/fish" />
+        <action
+            android:id="@+id/action_home_to_insectFragment"
+            app:destination="@id/insect" />
+        <action
+            android:id="@+id/action_home_to_fossilFragment"
+            app:destination="@id/fossil" />
     </fragment>
 </navigation>
