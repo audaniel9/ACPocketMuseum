@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
@@ -88,7 +89,13 @@ public class FossilFragment extends Fragment {
     // Build the recycler view
     private void buildRecyclerView(final View rootView) {
         RecyclerView fossilRecyclerView = rootView.findViewById(R.id.fossilRecyclerView);
-        final List<Fossil> fossilList = museumSharedViewModel.getFossilList();
+        final List<Fossil> fossilList = museumSharedViewModel.getFossilList().getValue();
+        museumSharedViewModel.getFossilList().observe(getViewLifecycleOwner(), new Observer<List<Fossil>>() {
+            @Override
+            public void onChanged(List<Fossil> list) {
+                adapter.setResults(list);
+            }
+        });
 
         fossilRecyclerView.setHasFixedSize(true);
         fossilRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())); // change this to implement grid view i think?

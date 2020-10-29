@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
@@ -88,7 +90,13 @@ public class InsectFragment extends Fragment {
     // Build the recycler view
     private void buildRecyclerView(final View rootView) {
         RecyclerView insectRecyclerView = rootView.findViewById(R.id.insectRecyclerView);
-        final List<Insect> insectList = museumSharedViewModel.getInsectList();
+        final List<Insect> insectList = museumSharedViewModel.getInsectList().getValue();
+        museumSharedViewModel.getInsectList().observe(getViewLifecycleOwner(), new Observer<List<Insect>>() {
+            @Override
+            public void onChanged(List<Insect> list) {
+                adapter.setResults(list);
+            }
+        });
 
         insectRecyclerView.setHasFixedSize(true);
         insectRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

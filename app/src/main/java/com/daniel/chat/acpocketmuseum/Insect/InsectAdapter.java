@@ -15,6 +15,7 @@ import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.daniel.chat.acpocketmuseum.Fish.Fish;
 import com.daniel.chat.acpocketmuseum.R;
 
 import java.util.ArrayList;
@@ -43,6 +44,12 @@ public class InsectAdapter extends RecyclerView.Adapter<InsectAdapter.ViewHolder
         this.insectList = insectList;
         this.insectListFull = new ArrayList<>(insectList);
         this.insectListStatic = new ArrayList<>(insectList);
+    }
+
+    // Update the UI when observer has changes
+    public void setResults(List<Insect> results) {
+        this.insectList = results;
+        notifyDataSetChanged();
     }
 
     @NonNull

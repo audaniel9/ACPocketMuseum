@@ -44,6 +44,12 @@ public class FishAdapter extends RecyclerView.Adapter<FishAdapter.ViewHolder> im
         this.fishListStatic = new ArrayList<>(fishList);
     }
 
+    // Update the UI when observer has changes
+    public void setResults(List<Fish> results) {
+        this.fishList = results;
+        notifyDataSetChanged();
+    }
+
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

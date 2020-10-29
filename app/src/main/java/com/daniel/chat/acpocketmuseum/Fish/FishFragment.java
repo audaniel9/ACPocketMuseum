@@ -6,12 +6,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
@@ -88,7 +92,13 @@ public class FishFragment extends Fragment {
     // Build the recycler view
     private void buildRecyclerView(final View rootView) {
         RecyclerView fishRecyclerView = rootView.findViewById(R.id.fishRecyclerView);
-        final List<Fish> fishList = museumSharedViewModel.getFishList();
+        final List<Fish> fishList = museumSharedViewModel.getFishList().getValue();
+        museumSharedViewModel.getFishList().observe(getViewLifecycleOwner(), new Observer<List<Fish>>() {
+            @Override
+            public void onChanged(List<Fish> list) {
+                adapter.setResults(list);
+            }
+        });
 
         fishRecyclerView.setHasFixedSize(true);
         fishRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())); // change this to implement grid view i think?

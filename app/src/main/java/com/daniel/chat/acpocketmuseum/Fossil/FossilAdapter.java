@@ -15,6 +15,7 @@ import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.daniel.chat.acpocketmuseum.Fish.Fish;
 import com.daniel.chat.acpocketmuseum.R;
 
 import org.w3c.dom.Text;
@@ -45,6 +46,12 @@ public class FossilAdapter extends RecyclerView.Adapter<FossilAdapter.ViewHolder
         this.fossilList = fossilList;
         this.fossilListFull = new ArrayList<>(fossilList);
         this.fossilListStatic = new ArrayList<>(fossilList);
+    }
+
+    // Update the UI when observer has changes
+    public void setResults(List<Fossil> results) {
+        this.fossilList = results;
+        notifyDataSetChanged();
     }
 
     @NonNull

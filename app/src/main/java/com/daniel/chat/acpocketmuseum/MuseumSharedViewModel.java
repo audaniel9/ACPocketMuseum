@@ -16,14 +16,20 @@ import java.util.List;
 
 public class MuseumSharedViewModel extends AndroidViewModel {
     private DataRepository repository;
-    private List<Fish> fishList;
-    private List<Insect> insectList;
-    private List<Fossil> fossilList;
+    private MutableLiveData<List<Fish>> fishList;
+    private MutableLiveData<List<Insect>> insectList;
+    private MutableLiveData<List<Fossil>> fossilList;
     private MutableLiveData<List<MuseumSpecimen>> favoriteList;
 
     public MuseumSharedViewModel(@NonNull Application application) {
         super(application);
         repository = new DataRepository(application);
+
+        // Initiate API call
+        repository.getFishResponse();
+        repository.getInsectsResponse();
+        repository.getFossilsResponse();
+
         fishList = repository.getFishListFromRepo();
         insectList = repository.getInsectListFromRepo();
         fossilList = repository.getFossilListFromRepo();
@@ -31,15 +37,15 @@ public class MuseumSharedViewModel extends AndroidViewModel {
         favoriteList.setValue(new ArrayList<MuseumSpecimen>());
     }
 
-    public List<Fish> getFishList() {
+    public MutableLiveData<List<Fish>> getFishList() {
         return fishList;
     }
 
-    public List<Insect> getInsectList() {
+    public MutableLiveData<List<Insect>> getInsectList() {
         return insectList;
     }
 
-    public List<Fossil> getFossilList() {
+    public MutableLiveData<List<Fossil>> getFossilList() {
         return fossilList;
     }
 
