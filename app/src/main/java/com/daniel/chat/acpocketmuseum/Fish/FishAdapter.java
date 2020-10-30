@@ -38,15 +38,20 @@ public class FishAdapter extends RecyclerView.Adapter<FishAdapter.ViewHolder> im
     }
 
     // Adapter constructor
-    public FishAdapter(List<Fish> fishList) {
-        this.fishList = fishList;
-        this.fishListFull = new ArrayList<>(fishList);
-        this.fishListStatic = new ArrayList<>(fishList);
+    public FishAdapter() {
+        this.fishList = new ArrayList<>();
+        this.fishListFull = new ArrayList<>();
+        this.fishListStatic = new ArrayList<>();
     }
 
     // Update the UI when observer has changes
-    public void setResults(List<Fish> results) {
-        this.fishList = results;
+    public void setResults(List<Fish> fishList) {
+        this.fishList.clear();
+        this.fishListFull.clear();
+        this.fishListStatic.clear();
+        this.fishList = fishList;
+        this.fishListFull = new ArrayList<>(fishList);
+        this.fishListStatic = new ArrayList<>(fishList);
         notifyDataSetChanged();
     }
 
@@ -60,10 +65,10 @@ public class FishAdapter extends RecyclerView.Adapter<FishAdapter.ViewHolder> im
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.nameTextView.setText(fishList.get(position).getName());
-        holder.locationTextView.setText("Location: " + fishList.get(position).getLocation());
-        holder.priceTextView.setText("Price: " + fishList.get(position).getPrice());
-        holder.timesTextView.setText("Times: " + (fishList.get(position).getTimes().equals("") ? "All day" : fishList.get(position).getTimes()));
+        holder.nameTextView.setText(fishList.get(holder.getAdapterPosition()).getName());
+        holder.locationTextView.setText("Location: " + fishList.get(holder.getAdapterPosition()).getLocation());
+        holder.priceTextView.setText("Price: " + fishList.get(holder.getAdapterPosition()).getPrice());
+        holder.timesTextView.setText("Times: " + (fishList.get(holder.getAdapterPosition()).getTimes().equals("") ? "All day" : fishList.get(holder.getAdapterPosition()).getTimes()));
 
         loadDataSaveButton(holder);
         loadDataFavoriteButton(holder);

@@ -33,8 +33,6 @@ public class DataRepository {
         fishList = new MutableLiveData<>();
         insectList = new MutableLiveData<>();
         fossilList = new MutableLiveData<>();
-
-        // Initialize with empty list so app doesn't crash
         fishList.setValue(new ArrayList<Fish>());
         insectList.setValue((new ArrayList<Insect>()));
         fossilList.setValue(new ArrayList<Fossil>());
@@ -52,31 +50,14 @@ public class DataRepository {
             @Override
             public void onResponse(Call<List<Fish>> call, Response<List<Fish>> response) {
                 if(response.body() != null) {
-                    List<Fish> list = new ArrayList<>();
-
-                    for(Fish fish : response.body()) {
-                        int id = fish.getId();
-                        String name = fish.getName().substring(0, 1).toUpperCase() + fish.getName().substring(1);
-                        String location = fish.getLocation();
-                        String price = fish.getPrice() + " bells";
-                        String times = fish.getTimes();
-                        String rarity = fish.getRarity();
-                        String monthsNorthern = fish.getMonthsNorthern();
-                        String monthsSouthern = fish.getMonthsSouthern();
-                        String catchphrase = fish.getCatchphrase();
-                        String museumPhrase = fish.getMuseumPhrase();
-                        String priceCJ = fish.getPriceCJ();
-                        String shadow = fish.getShadow();
-
-                        list.add(new Fish(id, name, location, price, times, rarity, monthsNorthern, monthsSouthern, catchphrase, museumPhrase, priceCJ, shadow));
-                        fishList.postValue(list);
-                    }
+                    // List has been set
+                    fishList.postValue(response.body());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Fish>> call, Throwable t) {
-                fishList.setValue(new ArrayList<Fish>());
+                fishList.postValue(new ArrayList<Fish>());
                 Toast.makeText(context, "No connection", Toast.LENGTH_LONG).show();
                 t.printStackTrace();
             }
@@ -89,30 +70,14 @@ public class DataRepository {
             @Override
             public void onResponse(Call<List<Insect>> call, Response<List<Insect>> response) {
                 if(response.body() != null) {
-                    List<Insect> list = new ArrayList<>();
-
-                    for(Insect insect : response.body()) {
-                        int id = insect.getId();
-                        String name = insect.getName().substring(0, 1).toUpperCase() + insect.getName().substring(1);;
-                        String location = insect.getLocation();
-                        String price = insect.getPrice() + " bells";
-                        String times = insect.getTimes();
-                        String rarity = insect.getRarity();
-                        String monthsNorthern = insect.getMonthsNorthern();
-                        String monthsSouthern = insect.getMonthsSouthern();
-                        String catchphrase = insect.getCatchphrase();
-                        String museumPhrase = insect.getMuseumPhrase();
-                        String priceFlick = insect.getPriceFlick();
-
-                        list.add(new Insect(id, name, location, price, times, rarity, monthsNorthern, monthsSouthern, catchphrase, museumPhrase, priceFlick));
-                        insectList.postValue(list);
-                    }
+                    // List has been set
+                    insectList.postValue(response.body());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Insect>> call, Throwable t) {
-                insectList.setValue(new ArrayList<Insect>());
+                insectList.postValue(new ArrayList<Insect>());
                 Toast.makeText(context, "No connection", Toast.LENGTH_LONG).show();
                 t.printStackTrace();
             }
@@ -125,23 +90,14 @@ public class DataRepository {
             @Override
             public void onResponse(Call<List<Fossil>> call, Response<List<Fossil>> response) {
                 if(response.body() != null) {
-                    List<Fossil> list = new ArrayList<>();
-
-                    for(Fossil fossil : response.body()) {
-                        int id = fossil.getId();
-                        String name = fossil.getName().substring(0, 1).toUpperCase() + fossil.getName().substring(1);;
-                        String price = fossil.getPrice() + " bells";
-                        String museumPhrase = fossil.getMuseumPhrase();
-
-                        list.add(new Fossil(id, name, price, museumPhrase));
-                        fossilList.postValue(list);
-                    }
+                    // List has been set
+                    fossilList.postValue(response.body());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Fossil>> call, Throwable t) {
-                fossilList.setValue(new ArrayList<Fossil>());
+                fossilList.postValue(new ArrayList<Fossil>());
                 Toast.makeText(context, "No connection", Toast.LENGTH_LONG).show();
                 t.printStackTrace();
             }

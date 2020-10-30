@@ -25,16 +25,23 @@ public class MuseumSharedViewModel extends AndroidViewModel {
         super(application);
         repository = new DataRepository(application);
 
-        // Initiate API call
-        repository.getFishResponse();
-        repository.getInsectsResponse();
-        repository.getFossilsResponse();
-
         fishList = repository.getFishListFromRepo();
         insectList = repository.getInsectListFromRepo();
         fossilList = repository.getFossilListFromRepo();
         favoriteList = new MutableLiveData<>();
         favoriteList.setValue(new ArrayList<MuseumSpecimen>());
+    }
+
+    public void getFishResponse() {
+        repository.getFishResponse();
+    }
+
+    public void getInsectsResponse() {
+        repository.getInsectsResponse();
+    }
+
+    public void getFossilsResponse() {
+        repository.getFossilsResponse();
     }
 
     public MutableLiveData<List<Fish>> getFishList() {

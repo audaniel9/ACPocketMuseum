@@ -149,15 +149,15 @@ public class MuseumSpecimen implements Parcelable {
 
     public static Comparator<MuseumSpecimen> MuseumSpecimenSortAscending = new Comparator<MuseumSpecimen>() {
         @Override
-        public int compare(MuseumSpecimen fish, MuseumSpecimen fish2) {
-            return fish.getName().compareTo(fish2.getName());
+        public int compare(MuseumSpecimen specimen, MuseumSpecimen specimen2) {
+            return specimen.getName().compareTo(specimen2.getName());
         }
     };
 
     public static Comparator<MuseumSpecimen> MuseumSpecimenSortDescending = new Comparator<MuseumSpecimen>() {
         @Override
-        public int compare(MuseumSpecimen fish, MuseumSpecimen fish2) {
-            return fish2.getName().compareTo(fish.getName());
+        public int compare(MuseumSpecimen specimen, MuseumSpecimen specimen2) {
+            return specimen2.getName().compareTo(specimen.getName());
         }
     };
 }

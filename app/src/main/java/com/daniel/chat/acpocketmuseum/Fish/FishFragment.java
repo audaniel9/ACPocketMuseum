@@ -37,6 +37,15 @@ public class FishFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_fish, container, false);
 
         museumSharedViewModel = new ViewModelProvider(requireActivity()).get(MuseumSharedViewModel.class);   // Assign view model
+        museumSharedViewModel.getFishResponse(); // Initiate API call
+
+        museumSharedViewModel.getFishList().observe(getViewLifecycleOwner(), new Observer<List<Fish>>() {
+            @Override
+            public void onChanged(List<Fish> list) {
+                adapter.setResults(list);
+                Toast.makeText(getContext(), "Loaded fish", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         setHasOptionsMenu(true);    // Set toolbar menus
 
@@ -93,17 +102,11 @@ public class FishFragment extends Fragment {
     private void buildRecyclerView(final View rootView) {
         RecyclerView fishRecyclerView = rootView.findViewById(R.id.fishRecyclerView);
         final List<Fish> fishList = museumSharedViewModel.getFishList().getValue();
-        museumSharedViewModel.getFishList().observe(getViewLifecycleOwner(), new Observer<List<Fish>>() {
-            @Override
-            public void onChanged(List<Fish> list) {
-                adapter.setResults(list);
-            }
-        });
 
         fishRecyclerView.setHasFixedSize(true);
         fishRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())); // change this to implement grid view i think?
 
-        adapter = new FishAdapter(fishList);
+        adapter = new FishAdapter();
         adapter.setHasStableIds(true);
 
         adapter.setOnItemClickListener(new FishAdapter.OnItemClickListener() {

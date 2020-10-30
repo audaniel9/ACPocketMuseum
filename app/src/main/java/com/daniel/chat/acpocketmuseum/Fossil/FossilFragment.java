@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
@@ -34,6 +35,7 @@ public class FossilFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_fossil, container, false);
 
         museumSharedViewModel = new ViewModelProvider(requireActivity()).get(MuseumSharedViewModel.class);  // Assign view model
+        museumSharedViewModel.getFossilsResponse(); // Initiate API call
 
         setHasOptionsMenu(true);    // Set toolbar menus
 
@@ -94,6 +96,7 @@ public class FossilFragment extends Fragment {
             @Override
             public void onChanged(List<Fossil> list) {
                 adapter.setResults(list);
+                Toast.makeText(getContext(), "Loaded fossil", Toast.LENGTH_SHORT).show();
             }
         });
 

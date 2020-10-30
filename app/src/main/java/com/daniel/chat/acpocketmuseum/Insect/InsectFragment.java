@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,7 @@ public class InsectFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_insect, container, false);
 
         museumSharedViewModel = new ViewModelProvider(requireActivity()).get(MuseumSharedViewModel.class);   // Assign view model
+        museumSharedViewModel.getInsectsResponse(); // Initiate API call
 
         setHasOptionsMenu(true);    // Set toolbar menus
 
@@ -95,6 +97,7 @@ public class InsectFragment extends Fragment {
             @Override
             public void onChanged(List<Insect> list) {
                 adapter.setResults(list);
+                Toast.makeText(getContext(), "Loaded insect", Toast.LENGTH_SHORT).show();
             }
         });
 
